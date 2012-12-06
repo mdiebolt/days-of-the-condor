@@ -1,29 +1,24 @@
 <!doctype html>
 %html
   %head
-    %meta{:charset => "utf-8"}
+    %meta(charset="utf-8")
     %meta{:content => "IE=edge;chrome=1", "http-equiv" => "X-UA-Compatible"}
+    =stylesheet_link_tag 'blog'
   %body
-    #main{:role => "main"}
-      = yield
-    %aside
-      %h2 Recent Articles
-      %ol
-        - blog.articles[0...10].each do |article|
-          %li
-            %a{:href => article.url}= article.title
-            %span= article.date.strftime('%b %e')
-      %h2 Tags
-      %ol
-        - blog.tags.each do |tag, articles|
-          %li
-            %a(href="#{tag_path tag}")
-              = tag
-              (#{articles.size})
-      %h2 By Year
-      %ol
-        - blog.articles.group_by {|a| a.date.year }.each do |year, articles|
-          %li
-            %a(href="#{blog_year_path(year)}")
-              = year
-              (#{articles.size})
+    %header
+      %a(href='/')
+        %h1 Days of the Condor
+    .page
+      .content
+        -if current_article
+          %h2.title= current_article.title
+          .date= current_article.date.strftime('%b %e, %Y')
+
+        = yield
+      %nav.sidebar.small
+        %h2 Recent Articles
+        %ul
+          - blog.articles[0...10].each do |article|
+            %li
+              %a{:href => article.url}= article.title
+              .date= article.date.strftime('%b %e, %Y')
