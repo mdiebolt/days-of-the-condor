@@ -3,14 +3,13 @@ task :build do
   `git checkout master`
   `bundle exec middleman build`
   `mv build/ /blog/tmp/`
+  `rm -rf .sass-cache/`
 end
 
 desc "change to gh-pages branch"
 task :checkout_pages do
   `git checkout gh-pages`
   `git rm -rf .`
-  `git rm -rf build/`
-  `git rm -rf .sass-cache/`
 end
 
 desc "change to master branch"
@@ -26,11 +25,12 @@ end
 
 desc "move files to root level"
 task :move_files do
-  `cp -r /blog/tmp/* .`
+  `cp -r /blog/tmp/build/* .`
 end
 
 desc "push to github"
 task :push do
+  `git add .`
   `git commit -am 'Site updated at #{Time.now.utc}'`
   `git push origin gh-pages`
 end
