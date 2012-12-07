@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible' />
+    <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/blog.css" />
+  </head>
+  <body>
+    <header>
+      <a href='/'>
+        <h1>Days of the Condor</h1>
+      </a>
+    </header>
+    <div class='page'>
+      <div class='content'>
+        <h2 class='title'>
+  <a href="/2011/10/05/Programmatically focus content inside an iFrame.html">Programmatically focus content inside an iFrame</a>
+</h2>
+<div class='date'>Oct  5 2011</div>
+<p><p>This is a short one. On the Pixie landing page I was trying to use jQuery to focus on a game embedded via an iFrame. I tried</p>
+<div class="highlight"><pre><span class="nx">$</span> <span class="o">-&gt;</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s">&#39;iframe&#39;</span><span class="p">).</span><span class="nx">contents</span><span class="p">().</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;canvas&#39;</span><span class="p">).</span><span class="nx">focus</span><span class="p">()</span>
+</pre></div>
+<p>but that didn’t work.</p>
+
+<p>It turns out to get this working you need setTimeout. I guess the browser isn’t done loading the iFrame contents by the time jQuery says the DOM is ready.</p></p>
+<h2 class='title'>
+  <a href="/2011/09/20/jQuery-UI-Draggable-stop-drag-programmatically.html">jQuery UI Draggable stop drag programmatically</a>
+</h2>
+<div class='date'>Sep 20 2011</div>
+<p><p>I hate making elements on web pages draggable. I think it’s a gross UI choice. However, sometimes it makes sense.</p>
+
+<p>Recently, I’ve been working on making a bunch of interactive tooltips to help people get familiar with our game development tools on Pixie. It’s pretty convenient for the user to move these things around in order to see different parts of the code as they read the tips.</p></p>
+<h2 class='title'>
+  <a href="/2011/09/15/Arrays-and-jQuery-data-attributes.html">Arrays and jQuery data attributes</a>
+</h2>
+<div class='date'>Sep 15 2011</div>
+<p>
+      <p>I recently had a situation where I wanted to use jQuery’s data method to convert one of my HTML data-attribute values into an array.</p>
+      
+      <p>I ran into trouble when I tried to use the returned data as an array. The problem was that my data-attribute wasn’t valid JSON because I had double quoted the attribute value instead of single quoting it. As a result, jQuery was parsing it as a string rather than an array.</p>
+    </p>
+<h2 class='title'>
+  <a href="/2011/03/17/OS-X-dock-in-css.html">OS X dock in css</a>
+</h2>
+<div class='date'>Mar 17 2011</div>
+<p><p>As part of the <a href="http://pixieengine.com">Pixie</a> redesign, Daniel and I decided we wanted an <a href="http://daringfireball.net/linked/2011/01/13/app-word-of-the-year">“App”</a> dock as the primary site navigation. Without performing our design due diligence how could we expect to synergize the feel of the site and incentivize our community to shift the paradigm in our favor? #Monetize</p></p>
+<h2 class='title'>
+  <a href="/2011/03/14/glass.sass.html">glass.sass</a>
+</h2>
+<div class='date'>Mar 14 2011</div>
+<p>
+      <p>As part of our Pixie development stack we use SASS because it is much more manageable than standard css for supporting interesting styles across browsers.</p>
+      
+      <p>Recently, we decided to incorporate a glassy box-shadow into most of our gallery pages.</p>
+      
+      <p>Opera’s docs were very clear about how to set up this style. However, you’ll notice, as with a number of other css3 features, you need to include a ton of css (4 rules each made up of 5 shadows) to get this to work well across browsers.</p>
+    </p>
+<h2 class='title'>
+  <a href="/2010/12/08/Snake-html.html">Snake</a>
+</h2>
+<div class='date'>Dec  8 2010</div>
+<p>
+      <p>This is part one of a classic games in JavaScript series I am starting.</p>
+      
+      <p>I can hear all the haters now, “this guy never writes in his blog, there is no way this will be anything more than a one post series”. While this may be true, I am now unemployed so I have much more time to spend writing games that were invented in the 70s.</p>
+    </p>
+<h2 class='title'>
+  <a href="/2010/10/11/Contrasaurus-launched.html">Contrasaurus launched</a>
+</h2>
+<div class='date'>Oct 11 2010</div>
+<p>
+      <p>I am very excited to say that Contrasaurus has been launched!</p>
+      
+      <p>Head over to <a href="http://strd6.com/2010/10/contrasaurus-launch/">STRd6</a> for the full post.</p>
+      
+      <p>This was an awesome learning experience. Working with Daniel X. Moore since dreaming up this ridiculous game this May has been a pleasure.</p>
+    </p>
+<h2 class='title'>
+  <a href="/2010/08/31/Contrasaurus.html">Contrasaurus</a>
+</h2>
+<div class='date'>Aug 31 2010</div>
+<p>
+      <p>Despite all the bold claims I made in 50% of my blog posts, The Wrens are beating me badly at this blog-off. Saying something of value on the internet is a tough job.</p>
+      
+      <p>The real point of this post isn’t to complain that some band from New Jersey is better than me at typing 5 words every six months, it’s to shamelessly promote an amazing new browser / soon-to-be mobile phone game. It is called Contrasaurus and you can play it <a href='http://contrasaur.us/' target='_blank'>here</a>. Ten points if you can name all the references or explain the plot.</p>
+    </p>
+      </div>
+      <nav class='sidebar small'>
+        <h2>Recent Articles</h2>
+        <ul>
+          <li>
+            <a href='/2011/10/05/Programmatically focus content inside an iFrame.html'>Programmatically focus content inside an iFrame</a>
+            <div class='date'>Oct  5, 2011</div>
+          </li>
+          <li>
+            <a href='/2011/09/20/jQuery-UI-Draggable-stop-drag-programmatically.html'>jQuery UI Draggable stop drag programmatically</a>
+            <div class='date'>Sep 20, 2011</div>
+          </li>
+          <li>
+            <a href='/2011/09/15/Arrays-and-jQuery-data-attributes.html'>Arrays and jQuery data attributes</a>
+            <div class='date'>Sep 15, 2011</div>
+          </li>
+          <li>
+            <a href='/2011/03/17/OS-X-dock-in-css.html'>OS X dock in css</a>
+            <div class='date'>Mar 17, 2011</div>
+          </li>
+          <li>
+            <a href='/2011/03/14/glass.sass.html'>glass.sass</a>
+            <div class='date'>Mar 14, 2011</div>
+          </li>
+          <li>
+            <a href='/2010/12/08/Snake-html.html'>Snake</a>
+            <div class='date'>Dec  8, 2010</div>
+          </li>
+          <li>
+            <a href='/2010/10/11/Contrasaurus-launched.html'>Contrasaurus launched</a>
+            <div class='date'>Oct 11, 2010</div>
+          </li>
+          <li>
+            <a href='/2010/08/31/Contrasaurus.html'>Contrasaurus</a>
+            <div class='date'>Aug 31, 2010</div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </body>
+</html>
