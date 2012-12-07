@@ -1,0 +1,258 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible' />
+    <link type="text/css" rel="stylesheet" media="screen" href="/days-of-the-condor/stylesheets/blog.css" />
+  </head>
+  <body>
+    <header>
+      <a href='/'>
+        <h1>Days of the Condor</h1>
+      </a>
+    </header>
+    <div class='page'>
+      <div class='content'>
+        <h2 class='title'>Snake</h2>
+        <div class='date'>Dec  8, 2010</div>
+        <p>This is part one of a classic games in JavaScript series I am starting.</p>
+
+<p>I can hear all the haters now, “this guy never writes in his blog, there is no way this will be anything more than a one post series”. While this may be true, I am now unemployed so I have much more time to spend writing games that were invented in the 70s.</p>
+
+<p>It&#39;s also a shameless promotion / tutorial for <a href="http://pixieengine.com">Pixie</a>, which Daniel X. Moore and I have been hard at work on lately.</p>
+
+<p>Pixie’s goal as a game development platform is to take as much terribleness out of programming JavaScript as possible. In fact, I went as far as to write my game in Coffeescript to avoid JavaScript’s syntax.</p>
+
+<p>Let’s start with a high level view.</p>
+
+<h4>Main</h4>
+<div class="highlight"><pre><span class="nv">snake = </span><span class="nx">Snake</span><span class="p">()</span>
+<span class="nv">fruits = </span><span class="p">[]</span>
+
+<span class="nb">window</span><span class="p">.</span><span class="nv">game_over = </span><span class="kc">false</span>
+
+<span class="nv">controls =</span>
+  <span class="s">&quot;down&quot;</span><span class="o">:</span> <span class="nx">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+  <span class="s">&quot;up&quot;</span><span class="o">:</span> <span class="nx">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">)</span>
+  <span class="s">&quot;left&quot;</span><span class="o">:</span> <span class="nx">Point</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="s">&quot;right&quot;</span><span class="o">:</span> <span class="nx">Point</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="nx">$</span><span class="p">.</span><span class="nx">each</span> <span class="nx">controls</span><span class="p">,</span> <span class="nf">(key, value) -&gt;</span>
+  <span class="nx">Game</span><span class="p">.</span><span class="nx">keydown</span> <span class="nx">key</span><span class="p">,</span> <span class="o">-&gt;</span>
+    <span class="nx">snake</span><span class="p">.</span><span class="nx">move</span> <span class="nx">value</span>
+
+<span class="nv">collideFruits = </span><span class="o">-&gt;</span>
+  <span class="k">for</span> <span class="nx">fruit</span> <span class="k">in</span> <span class="nx">fruits</span>
+    <span class="nx">snake</span><span class="p">.</span><span class="nx">eat</span> <span class="nx">fruit</span>
+
+<span class="nx">Game</span><span class="p">.</span><span class="nx">update</span> <span class="o">-&gt;</span>
+  <span class="nx">snake</span><span class="p">.</span><span class="nx">update</span><span class="p">()</span>
+  <span class="k">if</span> <span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">game_over</span>
+    <span class="k">if</span> <span class="nx">rand</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.02</span>
+      <span class="nx">fruits</span><span class="p">.</span><span class="nx">push</span> <span class="nx">Fruit</span><span class="p">()</span>
+
+    <span class="nv">fruits = </span><span class="nx">fruits</span><span class="p">.</span><span class="nx">select</span> <span class="nf">(fruit) -&gt;</span>
+      <span class="nx">fruit</span><span class="p">.</span><span class="nx">update</span><span class="p">()</span>
+
+    <span class="nx">collideFruits</span><span class="p">()</span>
+
+<span class="nx">Game</span><span class="p">.</span><span class="nx">draw</span> <span class="nf">(canvas) -&gt;</span>
+  <span class="nx">canvas</span><span class="p">.</span><span class="nx">fill</span> <span class="s">&quot;</span><span class="err">#</span><span class="s">000&quot;</span>
+  <span class="nx">fruit</span><span class="p">.</span><span class="nx">draw</span> <span class="nx">canvas</span> <span class="k">for</span> <span class="nx">fruit</span> <span class="k">in</span> <span class="nx">fruits</span>
+  <span class="nx">snake</span><span class="p">.</span><span class="nx">draw</span> <span class="nx">canvas</span>
+</pre></div>
+<h5>Important methods</h5>
+
+<ul>
+<li>controls (not really a method): Takes an object of velocities and maps them to the keyboard to control the snake.</li>
+<li>collideFruits: Checks to see if the snake is touching any of the fruits.</li>
+<li>Game.update tells both the snake and fruits to update their data.</li>
+<li>Game.draw draws all the objects onscreen.</li>
+</ul>
+
+<p>The nice part about developing on Pixie is that a lot of the tedious boilerplate code, like setting up the canvas and creating your game loop, is already taken care of by including Gamelib in your app.</p>
+
+<p><strong>Main summary: Make a snake, set up the controls, add some fruit every once in a while, gg.</strong></p>
+
+<p>Now with the basic game outline in mind, let’s look at the game objects.</p>
+<div class="highlight"><pre><span class="nv">Fruit = </span><span class="nf">(I) -&gt;</span>
+  <span class="nx">I</span> <span class="o">||=</span> <span class="p">{}</span>
+
+  <span class="nx">$</span><span class="p">.</span><span class="nx">reverseMerge</span> <span class="nx">I</span><span class="p">,</span>
+    <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">F00&quot;</span>
+    <span class="nv">points: </span><span class="mi">20</span>
+    <span class="nv">radius: </span><span class="mi">5</span>
+    <span class="nv">x: </span><span class="mi">10</span><span class="o">*</span><span class="nx">rand</span><span class="p">(</span><span class="mi">47</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5</span>
+    <span class="nv">y: </span><span class="mi">10</span><span class="o">*</span><span class="nx">rand</span><span class="p">(</span><span class="mi">31</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5</span>
+
+  <span class="nv">half_points = </span><span class="nx">I</span><span class="p">.</span><span class="nx">points</span> <span class="o">/</span> <span class="mi">2</span>
+
+  <span class="nv">self = </span><span class="nx">GameObject</span><span class="p">(</span><span class="nx">I</span><span class="p">).</span><span class="nx">extend</span>
+    <span class="nv">eatenBy: </span><span class="nf">(snake) -&gt;</span>
+      <span class="nv">I.active = </span><span class="kc">false</span>
+      <span class="nx">snake</span><span class="p">.</span><span class="nx">score</span> <span class="nx">I</span><span class="p">.</span><span class="nx">points</span>
+
+    <span class="nv">draw: </span><span class="nf">(canvas) -&gt;</span>
+      <span class="nx">canvas</span><span class="p">.</span><span class="nx">fillColor</span> <span class="nx">I</span><span class="p">.</span><span class="nx">color</span>
+      <span class="nx">canvas</span><span class="p">.</span><span class="nx">fillCircle</span> <span class="nx">I</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">I</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span> <span class="nx">I</span><span class="p">.</span><span class="nx">radius</span>
+
+    <span class="nv">before:</span>
+      <span class="nv">update: </span><span class="o">-&gt;</span>
+        <span class="k">if</span> <span class="nx">I</span><span class="p">.</span><span class="nx">age</span> <span class="o">&gt;</span> <span class="mi">200</span>
+          <span class="nv">I.color = </span><span class="s">&quot;CC3&quot;</span>
+          <span class="nv">I.points = </span><span class="nx">half_points</span>
+
+  <span class="nx">self</span>
+</pre></div>
+<p>If you are unfamiliar with this JavaScript style I suggest checking out Daniel X. Moore’s <a href="http://strd6.com/category/256-javascript-game-extensions/">Game Extensions blog series</a>.</p>
+
+<p>This class defines the key aspects of a fruit such as its color, size, and position.</p>
+
+<h5>Important methods</h5>
+
+<ul>
+<li>eatenBy: Dispose of the fruit once it is eaten.</li>
+<li>draw: Draw the fruit onscreen</li>
+<li>before update: My fruit is extending GameObject, a class provided by a built-in Pixie library. GameObject already gives me an update method. Rather than overwrite the method and code the built-in features by hand, before: lets me jam some stuff in front of the update method so that the code I define there will be executed prior to the execution of the normal update method.</li>
+</ul>
+<div class="highlight"><pre><span class="nv">BodyPiece = </span><span class="nf">(I) -&gt;</span>
+  <span class="nx">I</span> <span class="o">||=</span> <span class="p">{}</span>
+
+  <span class="nx">$</span><span class="p">.</span><span class="nx">reverseMerge</span> <span class="nx">I</span><span class="p">,</span>
+    <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">FFF&quot;</span>
+    <span class="nv">position: </span><span class="nx">Point</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="nv">radius: </span><span class="mi">5</span><span class="p">,</span>
+
+  <span class="nv">self =</span>
+    <span class="nv">draw: </span><span class="nf">(canvas) -&gt;</span>
+      <span class="nx">canvas</span><span class="p">.</span><span class="nx">fillColor</span> <span class="nx">I</span><span class="p">.</span><span class="nx">color</span>
+      <span class="nx">canvas</span><span class="p">.</span><span class="nx">fillCircle</span> <span class="nx">I</span><span class="p">.</span><span class="nx">position</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">I</span><span class="p">.</span><span class="nx">position</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span> <span class="nx">I</span><span class="p">.</span><span class="nx">radius</span>
+
+    <span class="nv">position: </span><span class="nf">(val) -&gt;</span>
+      <span class="k">if</span><span class="p">(</span><span class="nx">val</span> <span class="o">!=</span> <span class="kc">undefined</span><span class="p">)</span>
+        <span class="nv">I.position = </span><span class="nx">val</span>
+      <span class="k">else</span>
+        <span class="nx">I</span><span class="p">.</span><span class="nx">position</span>
+</pre></div>
+<p>This class is very basic. It contains the bare bones information required to keep track of a piece of the snake’s body. Like Fruit, this tracks color, size, and position. Nothing else to say here.</p>
+<div class="highlight"><pre><span class="nv">Snake = </span><span class="nf">(I) -&gt;</span>
+  <span class="nx">I</span> <span class="o">||=</span> <span class="p">{}</span>
+
+  <span class="nx">$</span><span class="p">.</span><span class="nx">reverseMerge</span> <span class="nx">I</span><span class="p">,</span>
+    <span class="nv">dead: </span><span class="kc">false</span>
+    <span class="nv">pieces: </span><span class="p">[</span><span class="nx">BodyPiece</span><span class="p">()]</span>
+    <span class="nv">score: </span><span class="mi">0</span>
+    <span class="nv">velocity: </span><span class="nx">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+  <span class="nv">deathChecks = </span><span class="o">-&gt;</span>
+    <span class="nv">I.dead = </span><span class="nx">outOfBounds</span><span class="p">()</span>
+
+    <span class="nv">snake_temp = </span><span class="nx">I</span><span class="p">.</span><span class="nx">pieces</span><span class="p">.</span><span class="nx">copy</span><span class="p">()</span>
+    <span class="nv">head = </span><span class="nx">snake_temp</span><span class="p">.</span><span class="nx">shift</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="nx">piece</span> <span class="k">in</span> <span class="nx">snake_temp</span>
+      <span class="k">if</span> <span class="nx">head</span><span class="p">.</span><span class="nx">position</span><span class="p">().</span><span class="nx">equal</span> <span class="nx">piece</span><span class="p">.</span><span class="nx">position</span><span class="p">()</span>
+        <span class="nv">I.dead = </span><span class="kc">true</span>
+
+    <span class="k">if</span> <span class="nx">I</span><span class="p">.</span><span class="nx">dead</span>
+      <span class="nb">window</span><span class="p">.</span><span class="nv">game_over = </span><span class="kc">true</span>
+
+  <span class="nv">grow = </span><span class="o">-&gt;</span>
+    <span class="nv">headPosition = </span><span class="nx">I</span><span class="p">.</span><span class="nx">pieces</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">position</span><span class="p">()</span>
+
+    <span class="nx">I</span><span class="p">.</span><span class="nx">pieces</span><span class="p">.</span><span class="nx">unshift</span> <span class="nx">BodyPiece</span>
+      <span class="nv">position: </span><span class="nx">headPosition</span>
+
+  <span class="nv">moveTailToHead = </span><span class="o">-&gt;</span>
+    <span class="nv">headPosition = </span><span class="nx">I</span><span class="p">.</span><span class="nx">pieces</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">position</span><span class="p">()</span>
+    <span class="nv">tail = </span><span class="nx">I</span><span class="p">.</span><span class="nx">pieces</span><span class="p">.</span><span class="nx">pop</span><span class="p">()</span>
+    <span class="nx">tail</span><span class="p">.</span><span class="nx">position</span><span class="p">(</span><span class="nx">headPosition</span><span class="p">.</span><span class="nx">add</span> <span class="nx">I</span><span class="p">.</span><span class="nx">velocity</span><span class="p">)</span>
+    <span class="nx">I</span><span class="p">.</span><span class="nx">pieces</span><span class="p">.</span><span class="nx">unshift</span> <span class="nx">tail</span>
+
+  <span class="nv">movingOpposite = </span><span class="nf">(direction) -&gt;</span>
+    <span class="k">if</span> <span class="nx">I</span><span class="p">.</span><span class="nx">velocity</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="k">return</span> <span class="kc">false</span>
+    <span class="k">else</span>
+      <span class="nx">I</span><span class="p">.</span><span class="nx">velocity</span><span class="p">.</span><span class="nx">x</span> <span class="o">==</span> <span class="o">-</span><span class="nx">direction</span><span class="p">.</span><span class="nx">x</span> <span class="o">||</span> <span class="nx">I</span><span class="p">.</span><span class="nx">velocity</span><span class="p">.</span><span class="nx">y</span> <span class="o">==</span> <span class="o">-</span><span class="nx">direction</span><span class="p">.</span><span class="nx">y</span>
+
+  <span class="nv">outOfBounds = </span><span class="o">-&gt;</span>
+    <span class="nv">headPosition = </span><span class="nx">I</span><span class="p">.</span><span class="nx">pieces</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">position</span><span class="p">()</span>
+    <span class="o">!</span><span class="p">((</span><span class="mi">0</span> <span class="o">&lt;</span> <span class="nx">headPosition</span><span class="p">.</span><span class="nx">x</span> <span class="o">&lt;</span> <span class="mi">480</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;</span> <span class="nx">headPosition</span><span class="p">.</span><span class="nx">y</span> <span class="o">&lt;</span> <span class="mi">320</span><span class="p">))</span>
+  <span class="nv">self =</span>
+    <span class="nv">draw: </span><span class="nf">(canvas) -&gt;</span>
+      <span class="nx">snakePiece</span><span class="p">.</span><span class="nx">draw</span><span class="p">(</span><span class="nx">canvas</span><span class="p">)</span> <span class="k">for</span> <span class="nx">snakePiece</span> <span class="k">in</span> <span class="nx">I</span><span class="p">.</span><span class="nx">pieces</span>
+      <span class="k">if</span> <span class="nx">I</span><span class="p">.</span><span class="nx">dead</span>
+        <span class="nx">canvas</span><span class="p">.</span><span class="nx">centerText</span> <span class="s">&quot;GAME OVER&quot;</span><span class="p">,</span> <span class="mi">160</span>
+        <span class="nx">canvas</span><span class="p">.</span><span class="nx">centerText</span> <span class="s">&quot;Refresh to play again&quot;</span><span class="p">,</span> <span class="mi">180</span>
+      <span class="nx">canvas</span><span class="p">.</span><span class="nx">fillText</span> <span class="s">&quot;Score: &quot;</span> <span class="o">+</span> <span class="nx">I</span><span class="p">.</span><span class="nx">score</span><span class="p">,</span> <span class="mi">390</span><span class="p">,</span> <span class="mi">20</span>
+
+    <span class="nv">eat: </span><span class="nf">(fruit) -&gt;</span>
+      <span class="k">if</span> <span class="nx">I</span><span class="p">.</span><span class="nx">pieces</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">position</span><span class="p">().</span><span class="nx">equal</span> <span class="nx">fruit</span><span class="p">.</span><span class="nx">position</span><span class="p">()</span>
+        <span class="nx">fruit</span><span class="p">.</span><span class="nx">eatenBy</span> <span class="nx">self</span>
+        <span class="nx">grow</span><span class="p">()</span>
+
+    <span class="nv">move: </span><span class="nf">(direction) -&gt;</span>
+      <span class="nv">I.velocity = </span><span class="nx">direction</span> <span class="nx">unless</span> <span class="nx">movingOpposite</span> <span class="nx">direction</span>
+
+    <span class="nv">score: </span><span class="nf">(points) -&gt;</span>
+      <span class="nx">I</span><span class="p">.</span><span class="nx">score</span> <span class="o">+=</span> <span class="nx">points</span> <span class="o">*</span> <span class="nx">I</span><span class="p">.</span><span class="nx">pieces</span><span class="p">.</span><span class="nx">length</span>
+
+    <span class="nv">update: </span><span class="o">-&gt;</span>
+      <span class="k">if</span> <span class="o">!</span><span class="nx">I</span><span class="p">.</span><span class="nx">dead</span>
+        <span class="nx">moveTailToHead</span><span class="p">()</span>
+        <span class="nx">deathChecks</span><span class="p">()</span>
+</pre></div>
+<p>Okay, here is where most of the logic happens. The snake knows how many pieces are in its body, its score, how fast it is going, and whether or not it is dead.</p>
+
+<h5>Important methods</h5>
+
+<ul>
+<li>deathChecks: check if the snake should die from being out of bounds or colliding with itself</li>
+<li>movingOpposite: This is a helper method to make sure you can’t start moving left when moving right and collide into your body</li>
+<li>moveTailToHead: This is the key trick to coding this game. Treat the snake’s body as a circular array and when updating it move the end piece to the head rather than trying to update the position of each of the pieces</li>
+</ul>
+
+<p>The rest of the code is pretty simple. Draw the snake, with a few extra calls to draw the game over screen when it is dead. Define how a snake eats fruit. Allow a change in direction as long as you aren’t moving the opposite direction. Manage your score. Update the snake’s data.</p>
+
+<p>…And we are done. In 147 lines of Coffeescript we have a live snake game playable on any of the modern internets.</p>
+      </div>
+      <nav class='sidebar small'>
+        <h2>Recent Articles</h2>
+        <ul>
+          <li>
+            <a href='/days-of-the-condor/2011/10/05/Programmatically focus content inside an iFrame.html'>Programmatically focus content inside an iFrame</a>
+            <div class='date'>Oct  5, 2011</div>
+          </li>
+          <li>
+            <a href='/days-of-the-condor/2011/09/20/jQuery-UI-Draggable-stop-drag-programmatically.html'>jQuery UI Draggable stop drag programmatically</a>
+            <div class='date'>Sep 20, 2011</div>
+          </li>
+          <li>
+            <a href='/days-of-the-condor/2011/09/15/Arrays-and-jQuery-data-attributes.html'>Arrays and jQuery data attributes</a>
+            <div class='date'>Sep 15, 2011</div>
+          </li>
+          <li>
+            <a href='/days-of-the-condor/2011/03/17/OS-X-dock-in-css.html'>OS X dock in css</a>
+            <div class='date'>Mar 17, 2011</div>
+          </li>
+          <li>
+            <a href='/days-of-the-condor/2011/03/14/glass.sass.html'>glass.sass</a>
+            <div class='date'>Mar 14, 2011</div>
+          </li>
+          <li>
+            <a href='/days-of-the-condor/2010/12/08/Snake-html.html'>Snake</a>
+            <div class='date'>Dec  8, 2010</div>
+          </li>
+          <li>
+            <a href='/days-of-the-condor/2010/10/11/Contrasaurus-launched.html'>Contrasaurus launched</a>
+            <div class='date'>Oct 11, 2010</div>
+          </li>
+          <li>
+            <a href='/days-of-the-condor/2010/08/31/Contrasaurus.html'>Contrasaurus</a>
+            <div class='date'>Aug 31, 2010</div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </body>
+</html>
