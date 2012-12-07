@@ -91,6 +91,7 @@ set :images_dir, 'images'
 
 # Build-specific configuration
 configure :build do
+  set :http_prefix, '/days-of-the-condor'
   # For example, change the Compass output style for deployment
   # activate :minify_css
 
