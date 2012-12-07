@@ -10,6 +10,7 @@ task :checkout_pages do
   `git checkout gh-pages`
   `git rm -rf .`
   `git rm -rf build/`
+  `git rm -rf .sass-cache/`
 end
 
 desc "change to master branch"
