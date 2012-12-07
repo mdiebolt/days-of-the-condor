@@ -2,12 +2,14 @@ desc "build page"
 task :build do
   `git checkout master`
   `bundle exec middleman build`
-  `mv build /blog/tmp/`
+  `mv build/ /blog/tmp/`
 end
 
 desc "change to gh-pages branch"
 task :checkout_pages do
   `git checkout gh-pages`
+  `git rm -rf .`
+  `git rm -rf build/`
 end
 
 desc "change to master branch"
@@ -17,15 +19,13 @@ end
 
 desc "clean up"
 task :cleanup do
-  `rm -rf build/`
   `rm -rf /blog/tmp/`
   `mkdir /blog/tmp/`
 end
 
 desc "move files to root level"
 task :move_files do
-  `cp -r /blog/tmp/build/* .`
-  `cp CNAME .`
+  `cp -r /blog/tmp/* .`
 end
 
 desc "push to github"
