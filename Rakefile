@@ -30,6 +30,7 @@ end
 
 desc "push to github"
 task :push do
+  `echo www.daysofthecondor.com > CNAME`
   `git add .`
   `git commit -am 'Site updated at #{Time.now.utc}'`
   `git push origin gh-pages`
