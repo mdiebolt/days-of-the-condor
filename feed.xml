@@ -5,10 +5,101 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2011-10-05T00:00:00Z</updated>
+  <updated>2012-12-10T00:00:00Z</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>Clean bash profiles</title>
+    <link href="/2012/12/10/clean-bash-profiles.html" rel="alternate"/>
+    <id>/2012/12/10/clean-bash-profiles.html</id>
+    <published>2012-12-10T00:00:00Z</published>
+    <updated>2012-12-10T00:00:00Z</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <summary type="html">&lt;p&gt;Lately I&amp;#39;ve been more interested in writing Bash. However, as cool as Bash is for being able to pipe data all over the place, it has a really hard to read syntax. This makes understanding people&amp;#39;s 1000 line long Bash file tedious.&lt;/p&gt;
+
+&lt;p&gt;The more utility functions, aliases, and slight tweaks I add to my profile, the longer I have to spend each time I come back to it. I recently split out each of the sections into their own files to fix this.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;Lately I&amp;#39;ve been more interested in writing Bash. However, as cool as Bash is for being able to pipe data all over the place, it has a really hard to read syntax. This makes understanding people&amp;#39;s 1000 line long Bash file tedious.&lt;/p&gt;
+
+&lt;p&gt;The more utility functions, aliases, and slight tweaks I add to my profile, the longer I have to spend each time I come back to it. I recently split out each of the sections into their own files to fix this.&lt;/p&gt;
+
+&lt;p&gt;My new profile is much shorter and is very clear.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# export common color escape sequences&lt;/span&gt;
+&lt;span class="nb"&gt;source&lt;/span&gt; ~/Dropbox/dotfiles/colors
+
+&lt;span class="c"&gt;# source utility functions&lt;/span&gt;
+&lt;span class="k"&gt;for function &lt;/span&gt;in &lt;span class="sb"&gt;`&lt;/span&gt;find ~/Dropbox/dotfiles/bin/sh -type f&lt;span class="sb"&gt;`&lt;/span&gt;
+&lt;span class="k"&gt;do&lt;/span&gt;
+&lt;span class="k"&gt;  &lt;/span&gt;&lt;span class="nb"&gt;source&lt;/span&gt; &lt;span class="nv"&gt;$function&lt;/span&gt;
+&lt;span class="k"&gt;done&lt;/span&gt;
+
+&lt;span class="c"&gt;# aliases&lt;/span&gt;
+&lt;span class="nb"&gt;source&lt;/span&gt; ~/Dropbox/dotfiles/aliases
+
+&lt;span class="c"&gt;# z script&lt;/span&gt;
+&lt;span class="nb"&gt;source&lt;/span&gt; ~/z/z.sh
+
+&lt;span class="c"&gt;# system PATH&lt;/span&gt;
+&lt;span class="nb"&gt;source&lt;/span&gt; ~/Dropbox/dotfiles/paths
+
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;EDITOR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;subl
+
+&lt;span class="nb"&gt;eval&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$(rbenv init -)&amp;quot;&lt;/span&gt;
+
+&lt;span class="nv"&gt;computer_symbol&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&#9889;&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;symbol_formatting&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$reset\n$computer_symbol &amp;quot;&lt;/span&gt;
+
+&lt;span class="nv"&gt;PS1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;\n\[\`if [[ \$? = &amp;quot;&lt;/span&gt;0&lt;span class="s2"&gt;&amp;quot; ]]; then echo &amp;#39;\e[32m\h\e[0m&amp;#39;; else echo &amp;#39;\e[31m\h\e[0m&amp;#39; ; fi\`\]:\w$yellow&amp;quot;&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;`__git_ps1`&amp;#39;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$symbol_formatting&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I can never remember the color escape sequences, so the first thing I do is &lt;code&gt;source&lt;/code&gt; a file that exports common colors for easy use.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;red&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;\033[31m&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;yellow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;\033[33m&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;green&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;\033[32m&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;blue&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;\033[34m&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;purple&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;\033[35m&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;cyan&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;\033[36m&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;reset&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;\033[0m&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Next, I make sure that I have access to all the utility functions I&amp;#39;ve been writing by sourcing each of them from a scripts directory.&lt;/p&gt;
+
+&lt;p&gt;I noticed that my aliases were getting a bit out of hand and were taking up a large part of my profile, so I pulled them into a file too.&lt;/p&gt;
+
+&lt;p&gt;This next one is really useful. &lt;a href="https://github.com/rupa/z"&gt;z script&lt;/a&gt; is a Bash utility that Paul Irish mentioned in a talk. It allows you to &lt;code&gt;cd&lt;/code&gt; into a directory by fuzzy matching directories in your recent bash history. For example, if you always &lt;code&gt;cd&lt;/code&gt; into &lt;code&gt;~/matt/some/really/long/project/called/rainbow-unicorns&lt;/code&gt;, you could type &lt;code&gt;z uni&lt;/code&gt; and z script would work its magic and take you there.&lt;/p&gt;
+
+&lt;p&gt;The next part is a matter of personal taste. I prefer using vertical space to horizontal, so I split my &lt;code&gt;PATH&lt;/code&gt; variable assignment into another file. The old one used to have a bunch of junk all in one line.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/path1:/path2:/more/paths: &lt;span class="c"&gt;# etc&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Here are how my paths look now.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;path_directories&lt;/span&gt;&lt;span class="o"&gt;=(&lt;/span&gt;
+  &lt;span class="s1"&gt;&amp;#39;/usr/local/share/npm/bin:&amp;#39;&lt;/span&gt;
+  &lt;span class="s1"&gt;&amp;#39;~/.pollev/bin:&amp;#39;&lt;/span&gt;
+  &lt;span class="s1"&gt;&amp;#39;~/bin:&amp;#39;&lt;/span&gt;
+  &lt;span class="s1"&gt;&amp;#39;/bin:&amp;#39;&lt;/span&gt;
+  &lt;span class="s1"&gt;&amp;#39;/sbin:&amp;#39;&lt;/span&gt;
+  &lt;span class="s1"&gt;&amp;#39;/usr/local/bin:&amp;#39;&lt;/span&gt;
+  &lt;span class="s1"&gt;&amp;#39;/usr/bin:&amp;#39;&lt;/span&gt;
+  &lt;span class="s1"&gt;&amp;#39;/usr/local/sbin/:&amp;#39;&lt;/span&gt;
+  &lt;span class="s1"&gt;&amp;#39;/usr/sbin:&amp;#39;&lt;/span&gt;
+  &lt;span class="s1"&gt;&amp;#39;/opt/local/sbin:&amp;#39;&lt;/span&gt;
+  &lt;span class="s1"&gt;&amp;#39;/usr/local/git/bin:&amp;#39;&lt;/span&gt;
+  &lt;span class="s1"&gt;&amp;#39;/Applications/MacVim/:&amp;#39;&lt;/span&gt;
+  &lt;span class="s1"&gt;&amp;#39;/Users/matt/.redis26/bin:&amp;#39;&lt;/span&gt;
+&lt;span class="o"&gt;)&lt;/span&gt;
+
+&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;%s&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;${path_directories[@]}&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+
+&lt;span class="nb"&gt;export &lt;/span&gt;PATH
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;More verbose? Yes, but I&amp;#39;ll take it for clarity.&lt;/p&gt;
+
+&lt;p&gt;The rest isn&amp;#39;t too exciting, I assign my &lt;code&gt;EDITOR&lt;/code&gt; of choice, configure rbenv, and then work black magic to make my prompt look the way I like.&lt;/p&gt;
+
+&lt;p&gt;Overall, splitting my profile into multiple files has been a useful project in learning Bash tricks. The only thing I&amp;#39;m not pleased with is how hard it is to understand the &lt;code&gt;PS1&lt;/code&gt; code. I&amp;#39;d like to pull that logic into a function to clear up the intent of the code but I haven&amp;#39;t quite figured out how yet.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Programmatically focus content inside an iFrame</title>
     <link href="/2011/10/05/Programmatically focus content inside an iFrame.html" rel="alternate"/>
@@ -178,221 +269,6 @@
 &lt;p&gt;That&#8217;s it. And if we want to change the way our glass style looks, we only have to edit the mixin definition and the whole site is updated with the new styles.&lt;/p&gt;
 
 &lt;p&gt;I highly recommend SASS if you write any amount of css.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Snake</title>
-    <link href="/2010/12/08/Snake-html.html" rel="alternate"/>
-    <id>/2010/12/08/Snake-html.html</id>
-    <published>2010-12-08T00:00:00Z</published>
-    <updated>2010-12-08T00:00:00Z</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <summary type="html">&lt;p&gt;This is part one of a classic games in JavaScript series I am starting.&lt;/p&gt;
-
-&lt;p&gt;I can hear all the haters now, &#8220;this guy never writes in his blog, there is no way this will be anything more than a one post series&#8221;. While this may be true, I am now unemployed so I have much more time to spend writing games that were invented in the 70s.&lt;/p&gt;
-</summary>
-    <content type="html">&lt;p&gt;This is part one of a classic games in JavaScript series I am starting.&lt;/p&gt;
-
-&lt;p&gt;I can hear all the haters now, &#8220;this guy never writes in his blog, there is no way this will be anything more than a one post series&#8221;. While this may be true, I am now unemployed so I have much more time to spend writing games that were invented in the 70s.&lt;/p&gt;
-
-&lt;p&gt;It&amp;#39;s also a shameless promotion / tutorial for &lt;a href="http://pixieengine.com"&gt;Pixie&lt;/a&gt;, which Daniel X. Moore and I have been hard at work on lately.&lt;/p&gt;
-
-&lt;p&gt;Pixie&#8217;s goal as a game development platform is to take as much terribleness out of programming JavaScript as possible. In fact, I went as far as to write my game in Coffeescript to avoid JavaScript&#8217;s syntax.&lt;/p&gt;
-
-&lt;p&gt;Let&#8217;s start with a high level view.&lt;/p&gt;
-
-&lt;h4&gt;Main&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;snake = &lt;/span&gt;&lt;span class="nx"&gt;Snake&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="nv"&gt;fruits = &lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt;
-
-&lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;game_over = &lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;
-
-&lt;span class="nv"&gt;controls =&lt;/span&gt;
-  &lt;span class="s"&gt;&amp;quot;down&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;Point&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="s"&gt;&amp;quot;up&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;Point&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="s"&gt;&amp;quot;left&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;Point&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="s"&gt;&amp;quot;right&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;Point&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;each&lt;/span&gt; &lt;span class="nx"&gt;controls&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nf"&gt;(key, value) -&amp;gt;&lt;/span&gt;
-  &lt;span class="nx"&gt;Game&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;keydown&lt;/span&gt; &lt;span class="nx"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;
-    &lt;span class="nx"&gt;snake&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;move&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt;
-
-&lt;span class="nv"&gt;collideFruits = &lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;
-  &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;fruit&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;fruits&lt;/span&gt;
-    &lt;span class="nx"&gt;snake&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;eat&lt;/span&gt; &lt;span class="nx"&gt;fruit&lt;/span&gt;
-
-&lt;span class="nx"&gt;Game&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;update&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;
-  &lt;span class="nx"&gt;snake&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;update&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;game_over&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;rand&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mf"&gt;0.02&lt;/span&gt;
-      &lt;span class="nx"&gt;fruits&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;push&lt;/span&gt; &lt;span class="nx"&gt;Fruit&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-
-    &lt;span class="nv"&gt;fruits = &lt;/span&gt;&lt;span class="nx"&gt;fruits&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;select&lt;/span&gt; &lt;span class="nf"&gt;(fruit) -&amp;gt;&lt;/span&gt;
-      &lt;span class="nx"&gt;fruit&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;update&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-
-    &lt;span class="nx"&gt;collideFruits&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-
-&lt;span class="nx"&gt;Game&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;draw&lt;/span&gt; &lt;span class="nf"&gt;(canvas) -&amp;gt;&lt;/span&gt;
-  &lt;span class="nx"&gt;canvas&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;fill&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="s"&gt;000&amp;quot;&lt;/span&gt;
-  &lt;span class="nx"&gt;fruit&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;draw&lt;/span&gt; &lt;span class="nx"&gt;canvas&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;fruit&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;fruits&lt;/span&gt;
-  &lt;span class="nx"&gt;snake&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;draw&lt;/span&gt; &lt;span class="nx"&gt;canvas&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h5&gt;Important methods&lt;/h5&gt;
-
-&lt;ul&gt;
-&lt;li&gt;controls (not really a method): Takes an object of velocities and maps them to the keyboard to control the snake.&lt;/li&gt;
-&lt;li&gt;collideFruits: Checks to see if the snake is touching any of the fruits.&lt;/li&gt;
-&lt;li&gt;Game.update tells both the snake and fruits to update their data.&lt;/li&gt;
-&lt;li&gt;Game.draw draws all the objects onscreen.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The nice part about developing on Pixie is that a lot of the tedious boilerplate code, like setting up the canvas and creating your game loop, is already taken care of by including Gamelib in your app.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Main summary: Make a snake, set up the controls, add some fruit every once in a while, gg.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Now with the basic game outline in mind, let&#8217;s look at the game objects.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;Fruit = &lt;/span&gt;&lt;span class="nf"&gt;(I) -&amp;gt;&lt;/span&gt;
-  &lt;span class="nx"&gt;I&lt;/span&gt; &lt;span class="o"&gt;||=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
-
-  &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;reverseMerge&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nv"&gt;color: &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="s"&gt;F00&amp;quot;&lt;/span&gt;
-    &lt;span class="nv"&gt;points: &lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;
-    &lt;span class="nv"&gt;radius: &lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;
-    &lt;span class="nv"&gt;x: &lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nx"&gt;rand&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;47&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;
-    &lt;span class="nv"&gt;y: &lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nx"&gt;rand&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;
-
-  &lt;span class="nv"&gt;half_points = &lt;/span&gt;&lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;points&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
-
-  &lt;span class="nv"&gt;self = &lt;/span&gt;&lt;span class="nx"&gt;GameObject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;extend&lt;/span&gt;
-    &lt;span class="nv"&gt;eatenBy: &lt;/span&gt;&lt;span class="nf"&gt;(snake) -&amp;gt;&lt;/span&gt;
-      &lt;span class="nv"&gt;I.active = &lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;
-      &lt;span class="nx"&gt;snake&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;score&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;points&lt;/span&gt;
-
-    &lt;span class="nv"&gt;draw: &lt;/span&gt;&lt;span class="nf"&gt;(canvas) -&amp;gt;&lt;/span&gt;
-      &lt;span class="nx"&gt;canvas&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;fillColor&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;color&lt;/span&gt;
-      &lt;span class="nx"&gt;canvas&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;fillCircle&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;radius&lt;/span&gt;
-
-    &lt;span class="nv"&gt;before:&lt;/span&gt;
-      &lt;span class="nv"&gt;update: &lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;age&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;
-          &lt;span class="nv"&gt;I.color = &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;CC3&amp;quot;&lt;/span&gt;
-          &lt;span class="nv"&gt;I.points = &lt;/span&gt;&lt;span class="nx"&gt;half_points&lt;/span&gt;
-
-  &lt;span class="nx"&gt;self&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;If you are unfamiliar with this JavaScript style I suggest checking out Daniel X. Moore&#8217;s &lt;a href="http://strd6.com/category/256-javascript-game-extensions/"&gt;Game Extensions blog series&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;This class defines the key aspects of a fruit such as its color, size, and position.&lt;/p&gt;
-
-&lt;h5&gt;Important methods&lt;/h5&gt;
-
-&lt;ul&gt;
-&lt;li&gt;eatenBy: Dispose of the fruit once it is eaten.&lt;/li&gt;
-&lt;li&gt;draw: Draw the fruit onscreen&lt;/li&gt;
-&lt;li&gt;before update: My fruit is extending GameObject, a class provided by a built-in Pixie library. GameObject already gives me an update method. Rather than overwrite the method and code the built-in features by hand, before: lets me jam some stuff in front of the update method so that the code I define there will be executed prior to the execution of the normal update method.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;BodyPiece = &lt;/span&gt;&lt;span class="nf"&gt;(I) -&amp;gt;&lt;/span&gt;
-  &lt;span class="nx"&gt;I&lt;/span&gt; &lt;span class="o"&gt;||=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
-
-  &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;reverseMerge&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nv"&gt;color: &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="s"&gt;FFF&amp;quot;&lt;/span&gt;
-    &lt;span class="nv"&gt;position: &lt;/span&gt;&lt;span class="nx"&gt;Point&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="nv"&gt;radius: &lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-
-  &lt;span class="nv"&gt;self =&lt;/span&gt;
-    &lt;span class="nv"&gt;draw: &lt;/span&gt;&lt;span class="nf"&gt;(canvas) -&amp;gt;&lt;/span&gt;
-      &lt;span class="nx"&gt;canvas&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;fillColor&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;color&lt;/span&gt;
-      &lt;span class="nx"&gt;canvas&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;fillCircle&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;position&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;position&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;radius&lt;/span&gt;
-
-    &lt;span class="nv"&gt;position: &lt;/span&gt;&lt;span class="nf"&gt;(val) -&amp;gt;&lt;/span&gt;
-      &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;val&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;undefined&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="nv"&gt;I.position = &lt;/span&gt;&lt;span class="nx"&gt;val&lt;/span&gt;
-      &lt;span class="k"&gt;else&lt;/span&gt;
-        &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;position&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;This class is very basic. It contains the bare bones information required to keep track of a piece of the snake&#8217;s body. Like Fruit, this tracks color, size, and position. Nothing else to say here.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;Snake = &lt;/span&gt;&lt;span class="nf"&gt;(I) -&amp;gt;&lt;/span&gt;
-  &lt;span class="nx"&gt;I&lt;/span&gt; &lt;span class="o"&gt;||=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
-
-  &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;reverseMerge&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nv"&gt;dead: &lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;
-    &lt;span class="nv"&gt;pieces: &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;BodyPiece&lt;/span&gt;&lt;span class="p"&gt;()]&lt;/span&gt;
-    &lt;span class="nv"&gt;score: &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
-    &lt;span class="nv"&gt;velocity: &lt;/span&gt;&lt;span class="nx"&gt;Point&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-  &lt;span class="nv"&gt;deathChecks = &lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;
-    &lt;span class="nv"&gt;I.dead = &lt;/span&gt;&lt;span class="nx"&gt;outOfBounds&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-
-    &lt;span class="nv"&gt;snake_temp = &lt;/span&gt;&lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pieces&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-    &lt;span class="nv"&gt;head = &lt;/span&gt;&lt;span class="nx"&gt;snake_temp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;shift&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-
-    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;piece&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;snake_temp&lt;/span&gt;
-      &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;head&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;position&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="nx"&gt;equal&lt;/span&gt; &lt;span class="nx"&gt;piece&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;position&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-        &lt;span class="nv"&gt;I.dead = &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;
-
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;dead&lt;/span&gt;
-      &lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;game_over = &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;
-
-  &lt;span class="nv"&gt;grow = &lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;
-    &lt;span class="nv"&gt;headPosition = &lt;/span&gt;&lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pieces&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;position&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-
-    &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pieces&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;unshift&lt;/span&gt; &lt;span class="nx"&gt;BodyPiece&lt;/span&gt;
-      &lt;span class="nv"&gt;position: &lt;/span&gt;&lt;span class="nx"&gt;headPosition&lt;/span&gt;
-
-  &lt;span class="nv"&gt;moveTailToHead = &lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;
-    &lt;span class="nv"&gt;headPosition = &lt;/span&gt;&lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pieces&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;position&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-    &lt;span class="nv"&gt;tail = &lt;/span&gt;&lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pieces&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-    &lt;span class="nx"&gt;tail&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;position&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;headPosition&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;add&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;velocity&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pieces&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;unshift&lt;/span&gt; &lt;span class="nx"&gt;tail&lt;/span&gt;
-
-  &lt;span class="nv"&gt;movingOpposite = &lt;/span&gt;&lt;span class="nf"&gt;(direction) -&amp;gt;&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;velocity&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;equal&lt;/span&gt; &lt;span class="nx"&gt;Point&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-      &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;
-    &lt;span class="k"&gt;else&lt;/span&gt;
-      &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;velocity&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;direction&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;velocity&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;y&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;direction&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;y&lt;/span&gt;
-
-  &lt;span class="nv"&gt;outOfBounds = &lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;
-    &lt;span class="nv"&gt;headPosition = &lt;/span&gt;&lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pieces&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;position&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-    &lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="nx"&gt;headPosition&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;480&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="nx"&gt;headPosition&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;y&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;320&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-  &lt;span class="nv"&gt;self =&lt;/span&gt;
-    &lt;span class="nv"&gt;draw: &lt;/span&gt;&lt;span class="nf"&gt;(canvas) -&amp;gt;&lt;/span&gt;
-      &lt;span class="nx"&gt;snakePiece&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;draw&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;canvas&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;snakePiece&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pieces&lt;/span&gt;
-      &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;dead&lt;/span&gt;
-        &lt;span class="nx"&gt;canvas&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;centerText&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;GAME OVER&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;160&lt;/span&gt;
-        &lt;span class="nx"&gt;canvas&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;centerText&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Refresh to play again&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;180&lt;/span&gt;
-      &lt;span class="nx"&gt;canvas&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;fillText&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Score: &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;score&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;390&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;
-
-    &lt;span class="nv"&gt;eat: &lt;/span&gt;&lt;span class="nf"&gt;(fruit) -&amp;gt;&lt;/span&gt;
-      &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pieces&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;position&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="nx"&gt;equal&lt;/span&gt; &lt;span class="nx"&gt;fruit&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;position&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-        &lt;span class="nx"&gt;fruit&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;eatenBy&lt;/span&gt; &lt;span class="nx"&gt;self&lt;/span&gt;
-        &lt;span class="nx"&gt;grow&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-
-    &lt;span class="nv"&gt;move: &lt;/span&gt;&lt;span class="nf"&gt;(direction) -&amp;gt;&lt;/span&gt;
-      &lt;span class="nv"&gt;I.velocity = &lt;/span&gt;&lt;span class="nx"&gt;direction&lt;/span&gt; &lt;span class="nx"&gt;unless&lt;/span&gt; &lt;span class="nx"&gt;movingOpposite&lt;/span&gt; &lt;span class="nx"&gt;direction&lt;/span&gt;
-
-    &lt;span class="nv"&gt;score: &lt;/span&gt;&lt;span class="nf"&gt;(points) -&amp;gt;&lt;/span&gt;
-      &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;score&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="nx"&gt;points&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pieces&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;
-
-    &lt;span class="nv"&gt;update: &lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;
-      &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="nx"&gt;I&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;dead&lt;/span&gt;
-        &lt;span class="nx"&gt;moveTailToHead&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-        &lt;span class="nx"&gt;deathChecks&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Okay, here is where most of the logic happens. The snake knows how many pieces are in its body, its score, how fast it is going, and whether or not it is dead.&lt;/p&gt;
-
-&lt;h5&gt;Important methods&lt;/h5&gt;
-
-&lt;ul&gt;
-&lt;li&gt;deathChecks: check if the snake should die from being out of bounds or colliding with itself&lt;/li&gt;
-&lt;li&gt;movingOpposite: This is a helper method to make sure you can&#8217;t start moving left when moving right and collide into your body&lt;/li&gt;
-&lt;li&gt;moveTailToHead: This is the key trick to coding this game. Treat the snake&#8217;s body as a circular array and when updating it move the end piece to the head rather than trying to update the position of each of the pieces&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The rest of the code is pretty simple. Draw the snake, with a few extra calls to draw the game over screen when it is dead. Define how a snake eats fruit. Allow a change in direction as long as you aren&#8217;t moving the opposite direction. Manage your score. Update the snake&#8217;s data.&lt;/p&gt;
-
-&lt;p&gt;&#8230;And we are done. In 147 lines of Coffeescript we have a live snake game playable on any of the modern internets.&lt;/p&gt;
 </content>
   </entry>
 </feed>

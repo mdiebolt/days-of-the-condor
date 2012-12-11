@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible' />
+    <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/blog.css" />
+  </head>
+  <body>
+    <header>
+      <a href='/'>
+        <h1>Days of the Condor</h1>
+      </a>
+    </header>
+    <div class='page'>
+      <div class='content'>
+        <h2 class='title'>Clean bash profiles</h2>
+        <div class='date'>Dec 10, 2012</div>
+        <p>Lately I&#39;ve been more interested in writing Bash. However, as cool as Bash is for being able to pipe data all over the place, it has a really hard to read syntax. This makes understanding people&#39;s 1000 line long Bash file tedious.</p>
+
+<p>The more utility functions, aliases, and slight tweaks I add to my profile, the longer I have to spend each time I come back to it. I recently split out each of the sections into their own files to fix this.</p>
+
+<p>My new profile is much shorter and is very clear.</p>
+<div class="highlight"><pre><span class="c"># export common color escape sequences</span>
+<span class="nb">source</span> ~/Dropbox/dotfiles/colors
+
+<span class="c"># source utility functions</span>
+<span class="k">for function </span>in <span class="sb">`</span>find ~/Dropbox/dotfiles/bin/sh -type f<span class="sb">`</span>
+<span class="k">do</span>
+<span class="k">  </span><span class="nb">source</span> <span class="nv">$function</span>
+<span class="k">done</span>
+
+<span class="c"># aliases</span>
+<span class="nb">source</span> ~/Dropbox/dotfiles/aliases
+
+<span class="c"># z script</span>
+<span class="nb">source</span> ~/z/z.sh
+
+<span class="c"># system PATH</span>
+<span class="nb">source</span> ~/Dropbox/dotfiles/paths
+
+<span class="nb">export </span><span class="nv">EDITOR</span><span class="o">=</span>subl
+
+<span class="nb">eval</span> <span class="s2">&quot;$(rbenv init -)&quot;</span>
+
+<span class="nv">computer_symbol</span><span class="o">=</span><span class="s2">&quot;⚡&quot;</span>
+<span class="nv">symbol_formatting</span><span class="o">=</span><span class="s2">&quot;$reset\n$computer_symbol &quot;</span>
+
+<span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;\n\[\`if [[ \$? = &quot;</span>0<span class="s2">&quot; ]]; then echo &#39;\e[32m\h\e[0m&#39;; else echo &#39;\e[31m\h\e[0m&#39; ; fi\`\]:\w$yellow&quot;</span><span class="s1">&#39;`__git_ps1`&#39;</span><span class="s2">&quot;$symbol_formatting&quot;</span>
+</pre></div>
+<p>I can never remember the color escape sequences, so the first thing I do is <code>source</code> a file that exports common colors for easy use.</p>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">red</span><span class="o">=</span><span class="s2">&quot;\033[31m&quot;</span>
+<span class="nb">export </span><span class="nv">yellow</span><span class="o">=</span><span class="s2">&quot;\033[33m&quot;</span>
+<span class="nb">export </span><span class="nv">green</span><span class="o">=</span><span class="s2">&quot;\033[32m&quot;</span>
+<span class="nb">export </span><span class="nv">blue</span><span class="o">=</span><span class="s2">&quot;\033[34m&quot;</span>
+<span class="nb">export </span><span class="nv">purple</span><span class="o">=</span><span class="s2">&quot;\033[35m&quot;</span>
+<span class="nb">export </span><span class="nv">cyan</span><span class="o">=</span><span class="s2">&quot;\033[36m&quot;</span>
+<span class="nb">export </span><span class="nv">reset</span><span class="o">=</span><span class="s2">&quot;\033[0m&quot;</span>
+</pre></div>
+<p>Next, I make sure that I have access to all the utility functions I&#39;ve been writing by sourcing each of them from a scripts directory.</p>
+
+<p>I noticed that my aliases were getting a bit out of hand and were taking up a large part of my profile, so I pulled them into a file too.</p>
+
+<p>This next one is really useful. <a href="https://github.com/rupa/z">z script</a> is a Bash utility that Paul Irish mentioned in a talk. It allows you to <code>cd</code> into a directory by fuzzy matching directories in your recent bash history. For example, if you always <code>cd</code> into <code>~/matt/some/really/long/project/called/rainbow-unicorns</code>, you could type <code>z uni</code> and z script would work its magic and take you there.</p>
+
+<p>The next part is a matter of personal taste. I prefer using vertical space to horizontal, so I split my <code>PATH</code> variable assignment into another file. The old one used to have a bunch of junk all in one line.</p>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/path1:/path2:/more/paths: <span class="c"># etc</span>
+</pre></div>
+<p>Here are how my paths look now.</p>
+<div class="highlight"><pre><span class="nv">path_directories</span><span class="o">=(</span>
+  <span class="s1">&#39;/usr/local/share/npm/bin:&#39;</span>
+  <span class="s1">&#39;~/.pollev/bin:&#39;</span>
+  <span class="s1">&#39;~/bin:&#39;</span>
+  <span class="s1">&#39;/bin:&#39;</span>
+  <span class="s1">&#39;/sbin:&#39;</span>
+  <span class="s1">&#39;/usr/local/bin:&#39;</span>
+  <span class="s1">&#39;/usr/bin:&#39;</span>
+  <span class="s1">&#39;/usr/local/sbin/:&#39;</span>
+  <span class="s1">&#39;/usr/sbin:&#39;</span>
+  <span class="s1">&#39;/opt/local/sbin:&#39;</span>
+  <span class="s1">&#39;/usr/local/git/bin:&#39;</span>
+  <span class="s1">&#39;/Applications/MacVim/:&#39;</span>
+  <span class="s1">&#39;/Users/matt/.redis26/bin:&#39;</span>
+<span class="o">)</span>
+
+<span class="nv">PATH</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s2">&quot;%s&quot;</span> <span class="s2">&quot;${path_directories[@]}&quot;</span><span class="k">)</span>
+
+<span class="nb">export </span>PATH
+</pre></div>
+<p>More verbose? Yes, but I&#39;ll take it for clarity.</p>
+
+<p>The rest isn&#39;t too exciting, I assign my <code>EDITOR</code> of choice, configure rbenv, and then work black magic to make my prompt look the way I like.</p>
+
+<p>Overall, splitting my profile into multiple files has been a useful project in learning Bash tricks. The only thing I&#39;m not pleased with is how hard it is to understand the <code>PS1</code> code. I&#39;d like to pull that logic into a function to clear up the intent of the code but I haven&#39;t quite figured out how yet.</p>
+      </div>
+      <nav class='sidebar small'>
+        <h2>Recent Articles</h2>
+        <ul>
+          <li>
+            <a href='/2012/12/10/clean-bash-profiles.html'>Clean bash profiles</a>
+            <div class='date'>Dec 10, 2012</div>
+          </li>
+          <li>
+            <a href='/2011/10/05/Programmatically focus content inside an iFrame.html'>Programmatically focus content inside an iFrame</a>
+            <div class='date'>Oct  5, 2011</div>
+          </li>
+          <li>
+            <a href='/2011/09/20/jQuery-UI-Draggable-stop-drag-programmatically.html'>jQuery UI Draggable stop drag programmatically</a>
+            <div class='date'>Sep 20, 2011</div>
+          </li>
+          <li>
+            <a href='/2011/09/15/Arrays-and-jQuery-data-attributes.html'>Arrays and jQuery data attributes</a>
+            <div class='date'>Sep 15, 2011</div>
+          </li>
+          <li>
+            <a href='/2011/03/17/OS-X-dock-in-css.html'>OS X dock in css</a>
+            <div class='date'>Mar 17, 2011</div>
+          </li>
+          <li>
+            <a href='/2011/03/14/glass.sass.html'>glass.sass</a>
+            <div class='date'>Mar 14, 2011</div>
+          </li>
+          <li>
+            <a href='/2010/12/08/Snake-html.html'>Snake</a>
+            <div class='date'>Dec  8, 2010</div>
+          </li>
+          <li>
+            <a href='/2010/10/11/Contrasaurus-launched.html'>Contrasaurus launched</a>
+            <div class='date'>Oct 11, 2010</div>
+          </li>
+          <li>
+            <a href='/2010/08/31/Contrasaurus.html'>Contrasaurus</a>
+            <div class='date'>Aug 31, 2010</div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </body>
+</html>
