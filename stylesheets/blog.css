@@ -46,6 +46,10 @@ ul {
   list-style: none;
   padding-left: 1em; }
 
+/* line 47, _base.css.sass */
+.content ul {
+  list-style: circle; }
+
 /* line 1, _pygments.css */
 .hll {
   background-color: #ffffcc; }

@@ -1,0 +1,226 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible' />
+    <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/blog.css" />
+  </head>
+  <body>
+    <header>
+      <a href='/'>
+        <h1>Days of the Condor</h1>
+      </a>
+    </header>
+    <div class='page'>
+      <div class='content'>
+        <h2 class='title'>CoffeeScript static analysis</h2>
+        <div class='date'>Dec 16, 2012</div>
+        <p>For a while I&#39;ve been looking for code quality tools to analyze CoffeeScript. I haven&#39;t found anything very promising. So as part of a recent push to become more comfortable with Bash scripting, I decided I&#39;d cut some corners and do it myself.</p>
+
+<p>Here&#39;s a utility function I wrote to help me color text. It colors output yellow when it&#39;s within a warning range, and red when it exceeds a critical range.</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env sh</span>
+
+<span class="c"># set the output color based on conditions</span>
+set_output_color<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">local </span><span class="nv">value</span><span class="o">=</span><span class="nv">$1</span>
+  <span class="nb">local </span><span class="nv">medium_threshold</span><span class="o">=</span><span class="nv">$2</span>
+  <span class="nb">local </span><span class="nv">high_threshold</span><span class="o">=</span><span class="nv">$3</span>
+
+  <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$value&quot;</span> -gt <span class="s2">&quot;$high_threshold&quot;</span> <span class="o">]</span>
+  <span class="k">then</span>
+<span class="k">    </span><span class="nb">echo</span> -en <span class="nv">$red</span>
+  <span class="k">elif</span> <span class="o">[</span> <span class="s2">&quot;$value&quot;</span> -gt <span class="s2">&quot;$medium_threshold&quot;</span> <span class="o">]</span>
+  <span class="k">then</span>
+<span class="k">    </span><span class="nb">echo</span> -en <span class="nv">$yellow</span>
+  <span class="k">else</span>
+<span class="k">    </span><span class="nb">echo</span> -en <span class="nv">$reset</span>
+  <span class="k">fi</span>
+<span class="o">}</span>
+</pre></div>
+<p>As I mentioned in my previous post about <a href="/2012/12/10/clean-bash-profiles.html">clean bash profiles</a>, I export the most common colors as variable so that I don&#39;t need to remember Bash escape sequences. </p>
+
+<p>In this function I use those color variables to set the output color based on two parameters, <code>medium_threshold</code> and <code>high_threshold</code>, which are passed into the function as positional parameters, making sure to reset the color if the value doesn&#39;t fall within the threshold range.</p>
+
+<p>Building on <code>set_output_color</code>, I put together a short function to count the lines of code in each file below the current directory.</p>
+
+<h4>Metric: Lines of code</h4>
+
+<p>Lines of code is perhaps the most basic metric. As your code evolves it&#39;s easy to keep implementing feature after feature in the same file, glossing over the fact that a class or module is too long and should be split into another file for ease of reading and code clarity.</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env sh</span>
+
+<span class="c"># count lines of code in each file in the current directory</span>
+<span class="c"># report back long files</span>
+loc<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">local </span><span class="nv">high</span><span class="o">=</span>200
+  <span class="nb">local </span><span class="nv">medium</span><span class="o">=</span>150
+
+  <span class="k">for </span>file in <span class="sb">`</span>find . -type f<span class="sb">`</span>
+  <span class="k">do</span>
+<span class="k">    </span><span class="nv">count</span><span class="o">=</span><span class="sb">`</span>cat <span class="nv">$file</span> | wc -l<span class="sb">`</span>
+
+    <span class="c"># set output color based</span>
+    <span class="c"># on thresholds passed in</span>
+    set_output_color <span class="nv">$count</span> <span class="nv">$medium</span> <span class="nv">$high</span>
+
+    <span class="nb">echo</span> <span class="sb">`</span>basename <span class="nv">$file</span><span class="sb">`</span> <span class="nv">$count</span>
+  <span class="k">done</span>
+<span class="o">}</span>
+</pre></div>
+<p>This returns a nice colored output, highlighting files longer than 150 lines in yellow, and files longer than 200 lines in red. The thresholds chosen are based on personal preference.</p>
+
+<h4>Metric: Cyclomatic complexity</h4>
+
+<p>This metric is a bit more tricky to calculate, but essentially boils down to the number of paths that exist through the code. A file with high complexity often includes messy conditional logic and is a good place to start refactoring.</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env sh</span>
+
+<span class="c"># approximate cyclomatic complexity of files</span>
+<span class="c"># under the current directory</span>
+complexity<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">local </span>file
+  <span class="nb">local </span>count
+
+  <span class="nb">local </span><span class="nv">high</span><span class="o">=</span>15
+  <span class="nb">local </span><span class="nv">medium</span><span class="o">=</span>10
+
+  <span class="c"># look through all files in and</span>
+  <span class="c"># below this directory recursively</span>
+  <span class="k">for </span>file in <span class="sb">`</span>find . -type f<span class="sb">`</span>
+  <span class="k">do</span>
+    <span class="c"># count the number of</span>
+    <span class="c"># if statements plus one</span>
+    <span class="nv">count</span><span class="o">=</span><span class="sb">`</span>cat <span class="nv">$file</span> | grep <span class="s1">&#39;if &#39;</span> | wc -l<span class="sb">`</span>
+    <span class="nv">count</span><span class="o">=</span><span class="k">$((</span><span class="nv">$count</span> <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
+
+    set_output_color <span class="nv">$count</span> <span class="nv">$medium</span> <span class="nv">$high</span>
+
+    <span class="nb">echo</span> <span class="sb">`</span>basename <span class="nv">$file</span><span class="sb">`</span> <span class="nv">$count</span> <span class="nv">$line_output</span>
+  <span class="k">done</span>
+<span class="o">}</span>
+</pre></div>
+<p>Although this is a very crude approximation of cyclomatic complexity, I&#39;ve found it to be useful in pointing out files that could use refactoring. </p>
+
+<p>The function is very simple. It iterates over all files below the current directory and counts the number of lines containing an <code>if</code> statement, then adds one to that number, since there is always one path through your code before any conditionals are added. A more complete and accurate tool would add weight to nested <code>if</code> statements and would include iterators / for loops in the count.</p>
+
+<p>The thresholds were chosen based on complexity values discussed in the <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">wikipedia article about cyclomatic complexity</a>.</p>
+
+<h4>Metric: Lines of code per method</h4>
+
+<p>Long methods are hard to follow and should almost always be broken up into smaller methods with clear names that describe what they do.</p>
+<div class="highlight"><pre><span class="c1">#!/usr/bin/env ruby</span>
+
+<span class="k">def</span> <span class="nf">contains_function?</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+  <span class="o">!</span><span class="p">(</span><span class="n">line</span> <span class="o">=~</span> <span class="sr">/-&gt;|=&gt;/</span><span class="p">)</span><span class="o">.</span><span class="n">nil?</span>
+<span class="k">end</span>
+
+<span class="c1"># TODO this doesn&#39;t catch functions created like this</span>
+<span class="c1"># someFn = =&gt; &quot;blah&quot; or someFn = (arg) =&gt; &#39;blah&#39;</span>
+<span class="k">def</span> <span class="nf">function_name</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">index</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+    <span class="n">line</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">strip!</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">method_length</span><span class="p">(</span><span class="n">line_number</span><span class="p">,</span> <span class="n">function_start</span><span class="p">)</span>
+  <span class="n">line_number</span> <span class="o">-</span> <span class="n">function_start</span> <span class="o">-</span> <span class="mi">2</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">line_number</span><span class="p">,</span> <span class="n">function_start</span><span class="p">)</span>
+  <span class="s2">&quot;</span><span class="si">#{</span><span class="n">method_length</span><span class="p">(</span><span class="n">line_number</span><span class="p">,</span> <span class="n">function_start</span><span class="p">)</span><span class="si">}</span><span class="s2"> lines - </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">function_line_count</span>
+  <span class="n">file</span> <span class="o">=</span> <span class="no">ARGV</span><span class="o">.</span><span class="n">first</span>
+
+  <span class="nb">name</span> <span class="o">=</span> <span class="kp">nil</span>
+  <span class="n">function_start</span> <span class="o">=</span> <span class="mi">0</span>
+
+  <span class="c1"># TODO nested functions will break this</span>
+  <span class="no">File</span><span class="o">.</span><span class="n">open</span> <span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+    <span class="k">while</span> <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">gets</span>
+      <span class="c1"># if there is a function declaration on this line</span>
+      <span class="k">if</span> <span class="n">contains_function?</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">function_name</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="c1"># if we&#39;ve found a new function then report on the last one</span>
+        <span class="nb">puts</span> <span class="n">report</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">lineno</span><span class="p">,</span> <span class="n">function_start</span><span class="p">)</span> <span class="k">if</span> <span class="nb">name</span>
+
+        <span class="c1"># set where this functions starts and its name</span>
+        <span class="n">function_start</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">lineno</span>
+        <span class="nb">name</span> <span class="o">=</span> <span class="n">function_name</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+
+    <span class="c1"># add 2 because the blank line at the end of the file</span>
+    <span class="nb">puts</span> <span class="n">report</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">lineno</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">function_start</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c1"># execute the function if we are</span>
+<span class="c1"># executing the file by itself</span>
+<span class="k">if</span> <span class="bp">__FILE__</span> <span class="o">==</span> <span class="vg">$0</span>
+  <span class="n">function_line_count</span>
+<span class="k">end</span>
+</pre></div>
+<p>This last script is written in Ruby because I couldn&#39;t figure out a good way to write it in Bash. It counts the number of lines in each method. This is also the script that cheats the most, relying on a rigid structure to be accurate.</p>
+
+<p>It assumes you&#39;re working with a Backbone class in CoffeeScript, and detects methods based on the presence of <code>-&gt;</code> or <code>=&gt;</code>. After finding one of these identifiers, it stores the name of the function, determining that based on where it finds the <code>:</code> character (again, cheating by assuming an object literal style function declaration). Eg.</p>
+<div class="highlight"><pre><span class="nv">method1: </span><span class="o">-&gt;</span>
+  <span class="nx">something</span><span class="p">()</span>
+
+<span class="nv">method2: </span><span class="o">=&gt;</span>
+  <span class="nx">@another</span><span class="p">()</span>
+</pre></div>
+<p>Once a function is found, the line number where it starts is stored. The script keeps going through the file until a new function is found. When this happens, the current line number is used against the start line of the previous function to determine the line count. A formatted description of the method is displayed on STDOUT.</p>
+
+<h4>What&#39;s next?</h4>
+
+<p>My plans for the future are to incorporate this complexity suite into a CI workflow, failing the build if code complexity reaches a certain point. I&#39;ll probably want to modify it to exclude third party code. </p>
+
+<p>Although this test suite is by no means rigorous in a computer science sense, it provides good insight into the quality of my code with minimal effort spent to develop it.</p>
+      </div>
+      <nav class='sidebar small'>
+        <h2>Recent Articles</h2>
+        <ul>
+          <li>
+            <a href='/2012/12/16/coffeescript-static-analysis.html'>CoffeeScript static analysis</a>
+            <div class='date'>Dec 16, 2012</div>
+          </li>
+          <li>
+            <a href='/2012/12/10/clean-bash-profiles.html'>Clean bash profiles</a>
+            <div class='date'>Dec 10, 2012</div>
+          </li>
+          <li>
+            <a href='/2011/10/05/Programmatically focus content inside an iFrame.html'>Programmatically focus content inside an iFrame</a>
+            <div class='date'>Oct  5, 2011</div>
+          </li>
+          <li>
+            <a href='/2011/09/20/jQuery-UI-Draggable-stop-drag-programmatically.html'>jQuery UI Draggable stop drag programmatically</a>
+            <div class='date'>Sep 20, 2011</div>
+          </li>
+          <li>
+            <a href='/2011/09/15/Arrays-and-jQuery-data-attributes.html'>Arrays and jQuery data attributes</a>
+            <div class='date'>Sep 15, 2011</div>
+          </li>
+          <li>
+            <a href='/2011/03/17/OS-X-dock-in-css.html'>OS X dock in css</a>
+            <div class='date'>Mar 17, 2011</div>
+          </li>
+          <li>
+            <a href='/2011/03/14/glass.sass.html'>glass.sass</a>
+            <div class='date'>Mar 14, 2011</div>
+          </li>
+          <li>
+            <a href='/2010/12/08/Snake-html.html'>Snake</a>
+            <div class='date'>Dec  8, 2010</div>
+          </li>
+          <li>
+            <a href='/2010/10/11/Contrasaurus-launched.html'>Contrasaurus launched</a>
+            <div class='date'>Oct 11, 2010</div>
+          </li>
+          <li>
+            <a href='/2010/08/31/Contrasaurus.html'>Contrasaurus</a>
+            <div class='date'>Aug 31, 2010</div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </body>
+</html>
