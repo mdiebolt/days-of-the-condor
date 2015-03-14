@@ -1,79 +1,121 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset='utf-8' />
-    <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible' />
-    <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/blog.css" />
+    <meta charset='utf-8'>
+    <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+    <link href="http://fonts.googleapis.com/css?family=Lato:300|Libre+Baskerville" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/blog.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <header>
-      <a href='/'>
-        <h1>Days of the Condor</h1>
-      </a>
-    </header>
-    <div class='page'>
-      <div class='content'>
-        <h2 class='title'>Programmatically focus content inside an iFrame</h2>
-        <div class='date'>Oct  5, 2011</div>
-        <p>This is a short one. On the Pixie landing page I was trying to use jQuery to focus on a game embedded via an iFrame. I tried</p>
-<div class="highlight"><pre><span class="nx">$</span> <span class="o">-&gt;</span>
-  <span class="nx">$</span><span class="p">(</span><span class="s">&#39;iframe&#39;</span><span class="p">).</span><span class="nx">contents</span><span class="p">().</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;canvas&#39;</span><span class="p">).</span><span class="nx">focus</span><span class="p">()</span>
-</pre></div>
-<p>but that didn’t work.</p>
-
-<p>It turns out to get this working you need setTimeout. I guess the browser isn’t done loading the iFrame contents by the time jQuery says the DOM is ready.</p>
-<div class="highlight"><pre><span class="nx">$</span> <span class="o">-&gt;</span>
-  <span class="nx">setTimeout</span> <span class="o">-&gt;</span>
-    <span class="nx">$</span><span class="p">(</span><span class="s">&#39;iframe&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">contentWindow</span><span class="p">.</span><span class="nx">focus</span><span class="p">()</span>
-  <span class="p">,</span> <span class="mi">100</span>
-</pre></div>
-<p>Here’s the related <a href="http://stackoverflow.com/questions/369026/setting-focus-to-iframe-contents" target='_blank'>Stack Overflow question</a></p>
+    <header m-fixed>
+      <h1>
+        <a href='/' m-no-underline>Days of the Condor</a>
+      </h1>
+      <div class='blog-information' m-top-right>
+        <a class='blog-information--projects' href='https://github.com/mdiebolt'>Projects</a>
+        <a class='blog-information--about' href='http://diebo.lt'>About</a>
+        <div class='blog-information--recent-article-navigation'>
+          <div class='blog-information--top-bar'></div>
+          <div class='blog-information--middle-bar'></div>
+          <div class='blog-information--bottom-bar'></div>
+        </div>
       </div>
-      <nav class='sidebar small'>
-        <h2>Recent Articles</h2>
-        <ul>
-          <li>
+    </header>
+    <div class='blog-page'>
+      <div class='blog-page--container'>
+        <div class='blog-page--post'>
+          <h2 class='title'>
+            <a href="/2011/10/05/Programmatically focus content inside an iFrame.html">Programmatically focus content inside an iFrame</a>
+          </h2>
+          <div class='blog-date' m-fixed='' m-left=''>
+            <div class='blog-date--month'>OCT</div>
+            <div class='blog-date--day' m-bold> 5</div>
+            <div class='blog-date--year'>2011</div>
+          </div>
+        </div>
+        <p>This is a short one. On the Pixie landing page I was trying to use jQuery to focus on a game embedded via an iFrame. I tried</p>
+        <pre class="highlight coffeescript"><code><span class="nx">$</span> <span class="o">-&gt;</span>&#x000A;  <span class="nx">$</span><span class="p">(</span><span class="s">'iframe'</span><span class="p">).</span><span class="na">contents</span><span class="p">().</span><span class="na">find</span><span class="p">(</span><span class="s">'canvas'</span><span class="p">).</span><span class="na">focus</span><span class="p">()</span>&#x000A;</code></pre>
+        
+        <p>but that didn’t work.</p>
+        
+        <p>It turns out to get this working you need setTimeout. I guess the browser isn’t done loading the iFrame contents by the time jQuery says the DOM is ready.</p>
+        <pre class="highlight coffeescript"><code><span class="nx">$</span> <span class="o">-&gt;</span>&#x000A;  <span class="nx">setTimeout</span> <span class="o">-&gt;</span>&#x000A;    <span class="nx">$</span><span class="p">(</span><span class="s">'iframe'</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="na">contentWindow</span><span class="p">.</span><span class="na">focus</span><span class="p">()</span>&#x000A;  <span class="p">,</span> <span class="mi">100</span>&#x000A;</code></pre>
+        
+        <p>Here’s the related <a href="http://stackoverflow.com/questions/369026/setting-focus-to-iframe-contents" target='_blank'>Stack Overflow question</a></p>
+      </div>
+    </div>
+    <nav class='blog-previous-posts' m-fixed-right>
+      <div class='blog-previous-posts--container'>
+        <img class="blog-logo" src="/images/logo.svg" />
+        <h2 class='blog-previous-posts--title'>Recent Articles</h2>
+        <ul class='blog-previous-posts--list'>
+          <li class='blog-previous-posts--article'>
             <a href='/2012/12/16/coffeescript-static-analysis.html'>CoffeeScript static analysis</a>
             <div class='date'>Dec 16, 2012</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2012/12/10/clean-bash-profiles.html'>Clean bash profiles</a>
             <div class='date'>Dec 10, 2012</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2011/10/05/Programmatically focus content inside an iFrame.html'>Programmatically focus content inside an iFrame</a>
             <div class='date'>Oct  5, 2011</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2011/09/20/jQuery-UI-Draggable-stop-drag-programmatically.html'>jQuery UI Draggable stop drag programmatically</a>
             <div class='date'>Sep 20, 2011</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2011/09/15/Arrays-and-jQuery-data-attributes.html'>Arrays and jQuery data attributes</a>
             <div class='date'>Sep 15, 2011</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2011/03/17/OS-X-dock-in-css.html'>OS X dock in css</a>
             <div class='date'>Mar 17, 2011</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2011/03/14/glass.sass.html'>glass.sass</a>
             <div class='date'>Mar 14, 2011</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2010/12/08/Snake-html.html'>Snake</a>
             <div class='date'>Dec  8, 2010</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2010/10/11/Contrasaurus-launched.html'>Contrasaurus launched</a>
             <div class='date'>Oct 11, 2010</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2010/08/31/Contrasaurus.html'>Contrasaurus</a>
             <div class='date'>Aug 31, 2010</div>
           </li>
         </ul>
-      </nav>
-    </div>
+      </div>
+    </nav>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      
+      ga('create', 'UA-20149612-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script>
+      var nav = document.querySelector(".blog-information--recent-article-navigation")
+      nav.addEventListener("click", function() {
+        if (document.body.hasAttribute("s-slide-out")) {
+          document.body.removeAttribute("s-slide-out")
+        } else {
+          document.body.setAttribute("s-slide-out", "")
+        }
+      })
+      
+      window.addEventListener("resize", function() {
+        if (window.innerWidth > 640) {
+          document.body.removeAttribute("s-slide-out")
+        }
+      })
+    </script>
   </body>
 </html>

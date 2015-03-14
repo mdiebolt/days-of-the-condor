@@ -1,90 +1,126 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset='utf-8' />
-    <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible' />
-    <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/blog.css" />
+    <meta charset='utf-8'>
+    <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+    <link href="http://fonts.googleapis.com/css?family=Lato:300|Libre+Baskerville" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/blog.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <header>
-      <a href='/'>
-        <h1>Days of the Condor</h1>
-      </a>
-    </header>
-    <div class='page'>
-      <div class='content'>
-        <h2 class='title'>jQuery UI Draggable stop drag programmatically</h2>
-        <div class='date'>Sep 20, 2011</div>
-        <p>I hate making elements on web pages draggable. I think it’s a gross UI choice. However, sometimes it makes sense.</p>
-
-<p>Recently, I’ve been working on making a bunch of interactive tooltips to help people get familiar with our game development tools on Pixie. It’s pretty convenient for the user to move these things around in order to see different parts of the code as they read the tips.</p>
-
-<p>On some of these tooltips I have code samples, which should be selectable so that people can copy the snippets into their game. I ran into a problem using jQuery UI draggable. The code snippet is a child of the draggable tooltip div so trying to select this code would drag the whole tooltip around.</p>
-
-<p>After some googling I came across the good solution, after finding many bad ones, like “try <code>$(document).trigger(‘mouseup’);</code>”.</p>
-
-<p>Here it is:</p>
-<div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">tooltip&quot;</span><span class="p">).</span><span class="nx">draggable</span>
-  <span class="nv">start: </span><span class="nf">(e, ui) -&gt;</span>
-    <span class="k">return</span> <span class="kc">false</span> <span class="k">if</span> <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">srcElement</span><span class="p">).</span><span class="o">is</span><span class="p">(</span><span class="s">&#39;pre&#39;</span><span class="p">)</span>
-
-  <span class="nv">drag: </span><span class="nf">(e, ui) -&gt;</span>
-    <span class="k">if</span> <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">srcElement</span><span class="p">).</span><span class="o">is</span><span class="p">(</span><span class="s">&#39;pre&#39;</span><span class="p">)</span>
-      <span class="nv">ui.position.left = </span><span class="nx">ui</span><span class="p">.</span><span class="nx">position</span><span class="p">.</span><span class="nx">left_old</span>
-      <span class="nv">ui.position.top = </span><span class="nx">ui</span><span class="p">.</span><span class="nx">position</span><span class="p">.</span><span class="nx">top_old</span>
-
-    <span class="nv">ui.position.left_old = </span><span class="nx">ui</span><span class="p">.</span><span class="nx">position</span><span class="p">.</span><span class="nx">left</span>
-    <span class="nv">ui.position.top_old = </span><span class="nx">ui</span><span class="p">.</span><span class="nx">position</span><span class="p">.</span><span class="nx">top</span>
-</pre></div>
-<p>The drag event keeps the position of the element at its previous position and updates the “old position” to the same, effectively stopping movement.</p>
-
-<p>The start event is necessary for me because I want to kill the drag event immediately if the user clicks the code sample element. This prevents the behavior where someone highlights text and drags the cursor over the draggable ‘#tooltip’ element, causing the tooltip to move.</p>
+    <header m-fixed>
+      <h1>
+        <a href='/' m-no-underline>Days of the Condor</a>
+      </h1>
+      <div class='blog-information' m-top-right>
+        <a class='blog-information--projects' href='https://github.com/mdiebolt'>Projects</a>
+        <a class='blog-information--about' href='http://diebo.lt'>About</a>
+        <div class='blog-information--recent-article-navigation'>
+          <div class='blog-information--top-bar'></div>
+          <div class='blog-information--middle-bar'></div>
+          <div class='blog-information--bottom-bar'></div>
+        </div>
       </div>
-      <nav class='sidebar small'>
-        <h2>Recent Articles</h2>
-        <ul>
-          <li>
+    </header>
+    <div class='blog-page'>
+      <div class='blog-page--container'>
+        <div class='blog-page--post'>
+          <h2 class='title'>
+            <a href="/2011/09/20/jQuery-UI-Draggable-stop-drag-programmatically.html">jQuery UI Draggable stop drag programmatically</a>
+          </h2>
+          <div class='blog-date' m-fixed='' m-left=''>
+            <div class='blog-date--month'>SEP</div>
+            <div class='blog-date--day' m-bold>20</div>
+            <div class='blog-date--year'>2011</div>
+          </div>
+        </div>
+        <p>I hate making elements on web pages draggable. I think it’s a gross UI choice. However, sometimes it makes sense.</p>
+        
+        <p>Recently, I’ve been working on making a bunch of interactive tooltips to help people get familiar with our game development tools on Pixie. It’s pretty convenient for the user to move these things around in order to see different parts of the code as they read the tips.</p>
+        
+        <p>On some of these tooltips I have code samples, which should be selectable so that people can copy the snippets into their game. I ran into a problem using jQuery UI draggable. The code snippet is a child of the draggable tooltip div so trying to select this code would drag the whole tooltip around.</p>
+        
+        <p>After some googling I came across the good solution, after finding many bad ones, like “try <code>$(document).trigger(‘mouseup’);</code>”.</p>
+        
+        <p>Here it is:</p>
+        <pre class="highlight coffeescript"><code><span class="nx">$</span><span class="p">(</span><span class="s">"#tooltip"</span><span class="p">).</span><span class="na">draggable</span>&#x000A;  <span class="na">start</span><span class="o">:</span> <span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">ui</span><span class="p">)</span> <span class="o">-&gt;</span>&#x000A;    <span class="k">return</span> <span class="no">false</span> <span class="k">if</span> <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="na">srcElement</span><span class="p">).</span><span class="na">is</span><span class="p">(</span><span class="s">'pre'</span><span class="p">)</span>&#x000A;&#x000A;  <span class="na">drag</span><span class="o">:</span> <span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">ui</span><span class="p">)</span> <span class="o">-&gt;</span>&#x000A;    <span class="k">if</span> <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="na">srcElement</span><span class="p">).</span><span class="na">is</span><span class="p">(</span><span class="s">'pre'</span><span class="p">)</span>&#x000A;      <span class="nx">ui</span><span class="p">.</span><span class="na">position</span><span class="p">.</span><span class="na">left</span> <span class="o">=</span> <span class="nx">ui</span><span class="p">.</span><span class="na">position</span><span class="p">.</span><span class="na">left_old</span>&#x000A;      <span class="nx">ui</span><span class="p">.</span><span class="na">position</span><span class="p">.</span><span class="na">top</span> <span class="o">=</span> <span class="nx">ui</span><span class="p">.</span><span class="na">position</span><span class="p">.</span><span class="na">top_old</span>&#x000A;&#x000A;    <span class="nx">ui</span><span class="p">.</span><span class="na">position</span><span class="p">.</span><span class="na">left_old</span> <span class="o">=</span> <span class="nx">ui</span><span class="p">.</span><span class="na">position</span><span class="p">.</span><span class="na">left</span>&#x000A;    <span class="nx">ui</span><span class="p">.</span><span class="na">position</span><span class="p">.</span><span class="na">top_old</span> <span class="o">=</span> <span class="nx">ui</span><span class="p">.</span><span class="na">position</span><span class="p">.</span><span class="na">top</span>&#x000A;</code></pre>
+        
+        <p>The drag event keeps the position of the element at its previous position and updates the “old position” to the same, effectively stopping movement.</p>
+        
+        <p>The start event is necessary for me because I want to kill the drag event immediately if the user clicks the code sample element. This prevents the behavior where someone highlights text and drags the cursor over the draggable ‘#tooltip’ element, causing the tooltip to move.</p>
+      </div>
+    </div>
+    <nav class='blog-previous-posts' m-fixed-right>
+      <div class='blog-previous-posts--container'>
+        <img class="blog-logo" src="/images/logo.svg" />
+        <h2 class='blog-previous-posts--title'>Recent Articles</h2>
+        <ul class='blog-previous-posts--list'>
+          <li class='blog-previous-posts--article'>
             <a href='/2012/12/16/coffeescript-static-analysis.html'>CoffeeScript static analysis</a>
             <div class='date'>Dec 16, 2012</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2012/12/10/clean-bash-profiles.html'>Clean bash profiles</a>
             <div class='date'>Dec 10, 2012</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2011/10/05/Programmatically focus content inside an iFrame.html'>Programmatically focus content inside an iFrame</a>
             <div class='date'>Oct  5, 2011</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2011/09/20/jQuery-UI-Draggable-stop-drag-programmatically.html'>jQuery UI Draggable stop drag programmatically</a>
             <div class='date'>Sep 20, 2011</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2011/09/15/Arrays-and-jQuery-data-attributes.html'>Arrays and jQuery data attributes</a>
             <div class='date'>Sep 15, 2011</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2011/03/17/OS-X-dock-in-css.html'>OS X dock in css</a>
             <div class='date'>Mar 17, 2011</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2011/03/14/glass.sass.html'>glass.sass</a>
             <div class='date'>Mar 14, 2011</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2010/12/08/Snake-html.html'>Snake</a>
             <div class='date'>Dec  8, 2010</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2010/10/11/Contrasaurus-launched.html'>Contrasaurus launched</a>
             <div class='date'>Oct 11, 2010</div>
           </li>
-          <li>
+          <li class='blog-previous-posts--article'>
             <a href='/2010/08/31/Contrasaurus.html'>Contrasaurus</a>
             <div class='date'>Aug 31, 2010</div>
           </li>
         </ul>
-      </nav>
-    </div>
+      </div>
+    </nav>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      
+      ga('create', 'UA-20149612-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script>
+      var nav = document.querySelector(".blog-information--recent-article-navigation")
+      nav.addEventListener("click", function() {
+        if (document.body.hasAttribute("s-slide-out")) {
+          document.body.removeAttribute("s-slide-out")
+        } else {
+          document.body.setAttribute("s-slide-out", "")
+        }
+      })
+      
+      window.addEventListener("resize", function() {
+        if (window.innerWidth > 640) {
+          document.body.removeAttribute("s-slide-out")
+        }
+      })
+    </script>
   </body>
 </html>
