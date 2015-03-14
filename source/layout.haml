@@ -11,7 +11,7 @@
   %body
     = partial :header
 
-    .blog-page
+    .blog-page>
       .blog-page--container
         -if current_article
           = partial :article_info, locals: { article: current_article }
@@ -27,14 +27,17 @@
     = partial :analytics
 
     :javascript
-      var nav = document.querySelector(".blog-information--recent-article-navigation")
-      nav.addEventListener("click", function() {
+      function toggleSlide() {
         if (document.body.hasAttribute("s-slide-out")) {
           document.body.removeAttribute("s-slide-out")
         } else {
           document.body.setAttribute("s-slide-out", "")
         }
-      })
+      }
+      var nav = document.querySelector(".blog-information--recent-article-navigation")
+
+      nav.addEventListener("click", toggleSlide)
+      nav.addEventListener("touchstart", toggleSlide)
 
       window.addEventListener("resize", function() {
         if (window.innerWidth > 640) {

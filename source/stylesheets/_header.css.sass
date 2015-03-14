@@ -5,7 +5,7 @@ header
   line-height: $header-height
   padding: 0 7em
 
-  @media screen and (max-width: $break-small)
+  +mq
     padding: 0 1em
 
   &[m-fixed]
@@ -20,7 +20,7 @@ header
     top: 0
     right: 7em
 
-    @media screen and (max-width: $break-small)
+    +mq
       right: 1em
 
   a
@@ -41,7 +41,7 @@ header
     vertical-align: middle
     margin-left: 0.5em
 
-    @media screen and (max-width: $break-small)
+    +mq
       display: inline-block
 
   &--top-bar, &--middle-bar, &--bottom-bar

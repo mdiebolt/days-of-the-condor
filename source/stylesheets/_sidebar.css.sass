@@ -3,6 +3,7 @@
   height: 50%
 
 .blog-previous-posts
+  display: inline-block
   width: 30%
 
   &[m-fixed-right]
@@ -19,6 +20,6 @@
   &--article
     margin-bottom: 0.5em
 
-  @media screen and (max-width: $break-small)
+  +mq
     margin-right: -300px
     width: 300px

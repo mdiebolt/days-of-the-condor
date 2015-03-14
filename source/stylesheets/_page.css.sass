@@ -3,7 +3,7 @@
   bottom: 1em
   left: 2.5em
 
-  @media screen and (max-width: $break-small)
+  +mq
     position: relative
     text-align: center
     left: initial
@@ -13,17 +13,18 @@
     display: block
     line-height: 1.25
 
-    @media screen and (max-width: $break-small)
+    +mq
       display: inline-block
       margin: 0 0.25em
 
 .blog-page
+  display: inline-block
   line-height: 1.5
   padding-top: $header_height
   width: 70%
   padding-left: 7em
 
-  @media screen and (max-width: $break-small)
+  +mq
     padding-left: 1em
     padding-right: 1em
     width: 100%
@@ -44,7 +45,7 @@
     width: auto
     text-align: left
 
-    @media screen and (max-width: $break-small)
+    +mq
       display: block
 
   &[m-absolute]
@@ -57,7 +58,7 @@
     top: 10.25em
     left: 2.5em
 
-    @media screen and (max-width: $break-small)
+    +mq
       display: none
 
   &--day
