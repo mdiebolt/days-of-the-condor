@@ -15,4 +15,7 @@
     .blog-date--month= date.strftime("%b").upcase
     .blog-date--day(m-bold)= date.strftime("%e")
     .blog-date--year= date.strftime("%Y")
-  %p= article.summary if page == "list"
+
+  - if page == "list"
+    = find_and_preserve do
+      = article.summary

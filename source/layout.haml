@@ -13,7 +13,8 @@
         -if current_article
           = partial :article, locals: { article: current_article, page: "article" }
 
-        = yield
+        = find_and_preserve do
+          = yield
 
     = partial :sidebar, locals: { blog: blog }
     = partial :analytics
@@ -25,5 +26,11 @@
           document.body.removeAttribute("s-slide-out")
         } else {
           document.body.setAttribute("s-slide-out", "")
+        }
+      })
+
+      window.addEventListener("resize", function() {
+        if (window.innerWidth > 640) {
+          document.body.removeAttribute("s-slide-out")
         }
       })
