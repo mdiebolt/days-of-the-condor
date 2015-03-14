@@ -1,21 +1,22 @@
 :ruby
   date_options = { "m-left" => "" }
 
-  if page == "article"
+  if is_blog_article?
     date_options["m-fixed"] = ""
-  elsif page == "list"
+  else
     date_options["m-absolute"] = ""
   end
 
 .blog-page--post
   %h2.title
     = link_to article.title, article
+  - date = article.date
+  .blog-date(m-small)= date.strftime("%b %e, %Y")
   .blog-date{date_options}
-    - date = article.date
     .blog-date--month= date.strftime("%b").upcase
     .blog-date--day(m-bold)= date.strftime("%e")
     .blog-date--year= date.strftime("%Y")
 
-  - if page == "list"
+  - unless is_blog_article?
     = find_and_preserve do
       = article.summary

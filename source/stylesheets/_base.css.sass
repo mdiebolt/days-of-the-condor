@@ -4,7 +4,7 @@ $red: #ED382E
 $body-font: #5E1A17
 $header-height: 80px
 
-$break-small: 640px
+$break-small: 639px
 
 *, *:after, *:before
   +box-sizing(border-box)
@@ -63,11 +63,14 @@ h5, h6
   font-size: $h5
 
 a
+  +transition-property(color)
+  +transition-duration(0.250s)
   color: $red
   font-weight: bold
   text-decoration: none
 
   &:hover
+    color: lighten($red, 15%)
     text-decoration: underline
 
   &[m-no-underline]

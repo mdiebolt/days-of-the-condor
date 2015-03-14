@@ -4,6 +4,7 @@
     %meta(charset="utf-8")
     %meta(content="IE=edge;chrome=1" http-equiv="X-UA-Compatible")
     = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Lato:300|Libre+Baskerville"
+    = stylesheet_link_tag "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
     = stylesheet_link_tag "blog"
   %body
     = partial :header
@@ -11,10 +12,14 @@
     .blog-page
       .blog-page--container
         -if current_article
-          = partial :article, locals: { article: current_article, page: "article" }
+          = partial :article_info, locals: { article: current_article }
 
         = find_and_preserve do
           = yield
+          - if is_blog_article?
+            .blog-social-media
+              %a.fa.fa-3x.fa-twitter.blog-social-media--twitter(href="https://twitter.com/mdiebolt" m-no-underline)
+              %a.fa.fa-3x.fa-github.blog-social-media--github(href="https://github.com/mdiebolt" m-no-underline)
 
     = partial :sidebar, locals: { blog: blog }
     = partial :analytics

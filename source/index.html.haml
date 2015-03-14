@@ -3,7 +3,7 @@ pageable: true
 ---
 
 - page_articles.each_with_index do |article|
-  = partial :article, locals: { article: article, page: "list" }
+  = partial :article_info, locals: { article: article }
 
 .blog-pagination
   :ruby
