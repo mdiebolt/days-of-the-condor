@@ -1,0 +1,48 @@
+header
+  background-color: $red
+  color: white
+  height: $header-height
+  line-height: $header-height
+  padding: 0 7em
+
+  @media screen and (max-width: $break-small)
+    padding: 0 1em
+
+  &[m-fixed]
+    position: fixed
+    top: 0
+    left: 0
+    width: 100%
+    z-index: 100
+
+  > [m-top-right]
+    position: absolute
+    top: 0
+    right: 7em
+
+    @media screen and (max-width: $break-small)
+      right: 1em
+
+  a
+    color: white
+
+.blog-information
+  &--about
+    margin-left: 0.5em
+
+  &--recent-article-navigation
+    cursor: pointer
+    display: none
+    position: relative
+    line-height: $header-height
+    vertical-align: middle
+    margin-left: 0.5em
+
+    @media screen and (max-width: $break-small)
+      display: inline-block
+
+  &--top-bar, &--middle-bar, &--bottom-bar
+    width: 2em
+    height: 0.3em
+    background-color: white
+    margin-bottom: 0.25em

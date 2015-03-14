@@ -29,7 +29,7 @@ set_output_color() {
 }
 ```
 
-As I mentioned in my previous post about [clean bash profiles](/2012/12/10/clean-bash-profiles.html), I export the most common colors as variable so that I don't need to remember Bash escape sequences. 
+As I mentioned in my previous post about [clean bash profiles](/2012/12/10/clean-bash-profiles.html), I export the most common colors as variable so that I don't need to remember Bash escape sequences.
 
 In this function I use those color variables to set the output color based on two parameters, `medium_threshold` and `high_threshold`, which are passed into the function as positional parameters, making sure to reset the color if the value doesn't fall within the threshold range.
 
@@ -95,7 +95,7 @@ complexity() {
 }
 ```
 
-Although this is a very crude approximation of cyclomatic complexity, I've found it to be useful in pointing out files that could use refactoring. 
+Although this is a very crude approximation of cyclomatic complexity, I've found it to be useful in pointing out files that could use refactoring.
 
 The function is very simple. It iterates over all files below the current directory and counts the number of lines containing an `if` statement, then adds one to that number, since there is always one path through your code before any conditionals are added. A more complete and accurate tool would add weight to nested `if` statements and would include iterators / for loops in the count.
 
@@ -176,6 +176,6 @@ Once a function is found, the line number where it starts is stored. The script 
 
 #### What's next?
 
-My plans for the future are to incorporate this complexity suite into a CI workflow, failing the build if code complexity reaches a certain point. I'll probably want to modify it to exclude third party code. 
+My plans for the future are to incorporate this complexity suite into a CI workflow, failing the build if code complexity reaches a certain point. I'll probably want to modify it to exclude third party code.
 
 Although this test suite is by no means rigorous in a computer science sense, it provides good insight into the quality of my code with minimal effort spent to develop it.

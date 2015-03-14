@@ -1,48 +1,87 @@
-@import compass
 @import compass/css3
 
-$red: darken(red, 10%)
+$red: #ED382E
+$body-font: #5E1A17
+$header-height: 80px
 
-$body_font: #333
+$break-small: 640px
+
+*, *:after, *:before
+  +box-sizing(border-box)
+
+html, body
+  height: 100%
+
+html
+  color: $body-font
+  font-family: 'Libre Baskerville', serif
+
+header, .blog-date, .blog-previous-posts, .blog-pagination
+  font-family: 'Lato', sans-serif
+
+body
+  font-size: 16px
+  margin: 0
+  margin-bottom: 1em
+
+  &[s-slide-out]
+    transform: translateX(-300px)
+
+h1, h2, h3, h4, h5, h6
+  display: inline-block
+  font-family: 'Lato', sans-serif
+  margin: 0
+
+$h1: 2.44em
+$h2: 2.06em
+$h3: 1.5em
+$h4: 1.28em
+$h5: 1em
+
+$scale: 0.6
+
+h1
+  font-size: $h1
+
+  @media screen and (max-width: $break-small)
+    font-size: $h1 * $scale
+
+h2
+  font-size: $h2
+
+  @media screen and (max-width: $break-small)
+    font-size: $h2 * $scale
+
+h3
+  font-size: $h3
+
+h4
+  font-size: $h4
+
+h5, h6
+  font-size: $h5
 
 a
   color: $red
   font-weight: bold
   text-decoration: none
 
-.small
-  font-size: 80%
+  &:hover
+    text-decoration: underline
 
-.date
-  color: #aaa
-  font-size: 75%
+  &[m-no-underline]
+    &:hover
+      text-decoration: none
 
-.title
-  margin-bottom: 0
-  margin-top: 0
-
-  a
-    color: $body_font
-
-.highlight, code
-  +border-radius(3px)
-
-  background-color: rgb(238, 238, 238)
+.highlight
+  background-color: #F0EDED
   padding: 0.1em 0.5em
   overflow: hidden
   overflow-x: auto
 
-.sidebar
-  h2
-    margin-top: 0.1em
-    margin-bottom: 0.1em
-
-  li
-    padding: 0.25em 0
-
 ul
   list-style: none
-  padding-left: 1em
+  padding-left: 0
 
 .content ul
   list-style: circle

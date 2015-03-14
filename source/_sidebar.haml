@@ -1,0 +1,9 @@
+%nav.blog-previous-posts(m-fixed-right)
+  .blog-previous-posts--container
+    =image_tag "logo.svg", class: "blog-logo"
+    %h2 Recent Articles
+    %ul.blog-previous-posts--list
+      - blog.articles[0...10].each do |article|
+        %li.blog-previous-posts--article
+          %a(href="#{article.url}")= article.title
+          .date= article.date.strftime('%b %e, %Y')

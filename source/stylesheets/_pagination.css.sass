@@ -1,0 +1,30 @@
+.blog-pagination
+  position: relative
+
+  &--next-page, &--previous-page
+    +border-radius(4px)
+    +transition-property(background-color color)
+    +transition-duration(0.250s)
+    border: 1px solid $red
+    padding: 0.25em 0.5em
+
+    &:hover
+      background-color: $red
+      color: #fff
+
+  > [m-left]
+    position: absolute
+    left: 0
+
+  > [m-middle]
+    position: absolute
+    left: 0
+    right: 0
+    margin: auto
+    text-align: center
+    line-height: 2.25
+    width: 50%
+
+  > [m-right]
+    position: absolute
+    right: 0

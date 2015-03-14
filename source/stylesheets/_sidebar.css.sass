@@ -1,0 +1,21 @@
+.blog-logo
+  width: 50%
+  height: 50%
+
+.blog-previous-posts
+  width: 30%
+
+  &[m-fixed-right]
+    position: fixed
+    top: $header_height
+    right: 0
+
+  &--container
+    padding: 1em
+
+  &--article
+    margin-bottom: 0.5em
+
+  @media screen and (max-width: $break-small)
+    margin-right: -300px
+    width: 300px

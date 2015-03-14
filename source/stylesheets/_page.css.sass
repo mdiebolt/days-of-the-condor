@@ -1,0 +1,43 @@
+.blog-page
+  line-height: 1.5
+  padding-top: $header_height
+  width: 70%
+  padding-left: 7em
+
+  @media screen and (max-width: $break-small)
+    padding-left: 1em
+    padding-right: 1em
+    width: 100%
+
+  &--container
+    padding: 1em 0
+
+  &--post
+    position: relative
+
+.blog-date
+  text-align: center
+  line-height: 1
+  width: 3em
+
+  &[m-absolute]
+    position: absolute
+    top: 4.25em
+    left: -4.5em
+
+  &[m-fixed]
+    position: fixed
+    top: 10.25em
+    left: 2.5em
+
+    @media screen and (max-width: $break-small)
+      display: none
+
+  &--day
+    font-size: 2em
+
+    &[m-bold]
+      font-weight: bold
+
+  &--year
+    color: #aaa

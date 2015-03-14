@@ -37,7 +37,7 @@ computer_symbol="⚡"
 symbol_formatting="$reset\n$computer_symbol "
 
 PS1="\n\[\`if [[ \$? = "0" ]]; then echo '\e[32m\h\e[0m'; else echo '\e[31m\h\e[0m' ; fi\`\]:\w$yellow"'`__git_ps1`'"$symbol_formatting"
-``` 
+```
 
 I can never remember the color escape sequences, so the first thing I do is `source` a file that exports common colors for easy use.
 
