@@ -9,8 +9,7 @@
     <link href="/stylesheets/blog.css" rel="stylesheet" type="text/css" />
     <link href="/images/favicon.png" rel="icon" type="image/png" />
   </head>
-  <body>
-    <header m-fixed>
+  <body><header m-fixed>
       <h1>
         <a href='/' m-no-underline>Days of the Condor</a>
       </h1>
@@ -23,8 +22,7 @@
           <div class='blog-information--bottom-bar'></div>
         </div>
       </div>
-    </header>
-    <div class='blog-page'>
+    </header><div class='blog-page'>
       <div class='blog-page--container'>
         <div class='blog-page--post'>
           <h2 class='title'>
@@ -69,8 +67,7 @@
           <a class='fa fa-3x fa-github blog-social-media--github' href='https://github.com/mdiebolt' m-no-underline></a>
         </div>
       </div>
-    </div>
-    <nav class='blog-previous-posts' m-fixed-right>
+    </div><nav class='blog-previous-posts' m-fixed-right>
       <div class='blog-previous-posts--container'>
         <img class="blog-logo" src="/images/logo.svg" />
         <h2 class='blog-previous-posts--title'>Recent Articles</h2>
@@ -128,14 +125,17 @@
       ga('send', 'pageview');
     </script>
     <script>
-      var nav = document.querySelector(".blog-information--recent-article-navigation")
-      nav.addEventListener("click", function() {
+      function toggleSlide() {
         if (document.body.hasAttribute("s-slide-out")) {
           document.body.removeAttribute("s-slide-out")
         } else {
           document.body.setAttribute("s-slide-out", "")
         }
-      })
+      }
+      var nav = document.querySelector(".blog-information--recent-article-navigation")
+      
+      nav.addEventListener("click", toggleSlide)
+      nav.addEventListener("touchstart", toggleSlide)
       
       window.addEventListener("resize", function() {
         if (window.innerWidth > 640) {
