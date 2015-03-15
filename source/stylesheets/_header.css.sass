@@ -1,9 +1,10 @@
+$header-padding: 2.5em
 header
   background-color: $red
   color: white
   height: $header-height
   line-height: $header-height
-  padding: 0 7em
+  padding: 0 $header-padding
 
   +mq
     padding: 0 1em
@@ -18,7 +19,7 @@ header
   > [m-top-right]
     position: absolute
     top: 0
-    right: 7em
+    right: $header-padding
 
     +mq
       right: 1em
