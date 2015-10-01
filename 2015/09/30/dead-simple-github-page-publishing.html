@@ -26,24 +26,25 @@
       <div class='blog-page--container'>
         <div class='blog-page--post'>
           <h2 class='title'>
-            <a href="/2011/10/05/Programmatically focus content inside an iFrame.html">Programmatically focus content inside an iFrame</a>
+            <a href="/2015/09/30/dead-simple-github-page-publishing.html">Dead simple GitHub Page publishing</a>
           </h2>
-          <div class='blog-date' m-small>Oct  5, 2011</div>
+          <div class='blog-date' m-small>Sep 30, 2015</div>
           <div class='blog-date' m-fixed='' m-left=''>
-            <div class='blog-date--month'>OCT</div>
-            <div class='blog-date--day' m-bold> 5</div>
-            <div class='blog-date--year'>2011</div>
+            <div class='blog-date--month'>SEP</div>
+            <div class='blog-date--day' m-bold>30</div>
+            <div class='blog-date--year'>2015</div>
           </div>
         </div>
-        <p>This is a short one. On the Pixie landing page I was trying to use jQuery to focus on a game embedded via an iFrame. I tried</p>
-        <pre class="highlight coffeescript"><code><span class="nx">$</span> <span class="o">-&gt;</span>&#x000A;  <span class="nx">$</span><span class="p">(</span><span class="s">'iframe'</span><span class="p">).</span><span class="na">contents</span><span class="p">().</span><span class="na">find</span><span class="p">(</span><span class="s">'canvas'</span><span class="p">).</span><span class="na">focus</span><span class="p">()</span>&#x000A;</code></pre>
+        <p>GitHub Pages are awesome. Combined with a CNAME record you have a Real Site on the Internet. </p>
         
-        <p>but that didn’t work.</p>
+        <p>The most annoying part for me was always remembering the command to publish to GitHub Pages because I might be using a node tool, a ruby tool, or plain HTML, CSS, and JavaScript to create the site. Some of these tools have built in publishing mechanisms and others don&rsquo;t. </p>
         
-        <p>It turns out to get this working you need setTimeout. I guess the browser isn’t done loading the iFrame contents by the time jQuery says the DOM is ready.</p>
-        <pre class="highlight coffeescript"><code><span class="nx">$</span> <span class="o">-&gt;</span>&#x000A;  <span class="nx">setTimeout</span> <span class="o">-&gt;</span>&#x000A;    <span class="nx">$</span><span class="p">(</span><span class="s">'iframe'</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="na">contentWindow</span><span class="p">.</span><span class="na">focus</span><span class="p">()</span>&#x000A;  <span class="p">,</span> <span class="mi">100</span>&#x000A;</code></pre>
+        <p>Now, instead of relying on the tool to publish I have a really simple shell script take care of it for me. It&rsquo;s one line and it&rsquo;s consistent across any toolchain.</p>
+        <pre class="highlight shell"><code><span class="c"># push the folder `site` to repo's gh-pages branch</span>&#x000A;git subtree push --prefix site origin gh-pages&#x000A;</code></pre>
         
-        <p>Here’s the related <a href="http://stackoverflow.com/questions/369026/setting-focus-to-iframe-contents" target='_blank'>Stack Overflow question</a></p>
+        <p>This command takes whatever is currently in your <code>site</code> directory and pushes it to the gh-pages remote, which GitHub uses to trigger the GitHub Pages build.</p>
+        
+        <p>I didn&rsquo;t figure this out myself and I don&rsquo;t remember where I learned it but it&rsquo;s been a big time saver over many projects. </p>
         <div class='blog-social-media'>
           <a class='fa fa-3x fa-twitter blog-social-media--twitter' href='https://twitter.com/mdiebolt' m-no-underline></a>
           <a class='fa fa-3x fa-github blog-social-media--github' href='https://github.com/mdiebolt' m-no-underline></a>

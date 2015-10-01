@@ -26,6 +26,24 @@
       <div class='blog-page--container'>
         <div class='blog-page--post'>
           <h2 class='title'>
+            <a href="/2011/09/15/Arrays-and-jQuery-data-attributes.html">Arrays and jQuery data attributes</a>
+          </h2>
+          <div class='blog-date' m-small>Sep 15, 2011</div>
+          <div class='blog-date' m-absolute='' m-left=''>
+            <div class='blog-date--month'>SEP</div>
+            <div class='blog-date--day' m-bold>15</div>
+            <div class='blog-date--year'>2011</div>
+          </div>
+          <p>I recently had a situation where I wanted to use jQuery’s data method to convert one of my HTML data-attribute values into an array.</p>
+          
+          <p>I ran into trouble when I tried to use the returned data as an array. The problem was that my data-attribute wasn’t valid JSON because I had double quoted the attribute value instead of single quoting it. As a result, jQuery was parsing it as a string rather than an array.</p>
+          
+          <p>Here’s a demonstration of what was going on: <a href="http://jsfiddle.net/EgbUh/6/">http://jsfiddle.net/EgbUh/6/</a></p>
+          
+          <p>Don’t let this...</p>
+        </div>
+        <div class='blog-page--post'>
+          <h2 class='title'>
             <a href="/2011/03/17/OS-X-dock-in-css.html">OS X dock in css</a>
           </h2>
           <div class='blog-date' m-small>Mar 17, 2011</div>
@@ -95,23 +113,10 @@
           
           <p>Our next goal is to open source all of the tools we used to create Contrasaurus. We will be putting together a...</p>
         </div>
-        <div class='blog-page--post'>
-          <h2 class='title'>
-            <a href="/2010/08/31/Contrasaurus.html">Contrasaurus</a>
-          </h2>
-          <div class='blog-date' m-small>Aug 31, 2010</div>
-          <div class='blog-date' m-absolute='' m-left=''>
-            <div class='blog-date--month'>AUG</div>
-            <div class='blog-date--day' m-bold>31</div>
-            <div class='blog-date--year'>2010</div>
-          </div>
-          <p>Despite all the bold claims I made in 50% of my blog posts, The Wrens are beating me badly at this blog-off. Saying something of value on the internet is a tough job.</p>
-          
-          <p>The real point of this post isn’t to complain that some band from New Jersey is better than me at typing 5 words every six months, it’s to shamelessly promote an amazing new browser / soon-to-be mobile phone game. It is called Contrasaurus and you can play it <a href="http://contrasaur.us/" target="_blank">here</a>. Ten points if you can name all the references or explain the plot...</p>
-        </div>
         <div class='blog-pagination'>
           <a class="blog-pagination--previous-page" m-left="" m-no-underline="" href="/">Prev page</a>
-          <div class='blog-pagination--current-page' m-middle>Page 2 of 2</div>
+          <div class='blog-pagination--current-page' m-middle>Page 2 of 3</div>
+          <a class="blog-pagination--next-page" m-right="" m-no-underline="" href="/page/3/">Next page</a>
         </div>
       </div>
     </div><nav class='blog-previous-posts' m-fixed-right>
@@ -119,6 +124,10 @@
         <img class="blog-logo" src="/images/logo.svg" />
         <h2 class='blog-previous-posts--title'>Recent Articles</h2>
         <ul class='blog-previous-posts--list'>
+          <li class='blog-previous-posts--article'>
+            <a href='/2015/09/30/dead-simple-github-page-publishing.html'>Dead simple GitHub Page publishing</a>
+            <div class='date'>Sep 30, 2015</div>
+          </li>
           <li class='blog-previous-posts--article'>
             <a href='/2012/12/16/coffeescript-static-analysis.html'>CoffeeScript static analysis</a>
             <div class='date'>Dec 16, 2012</div>
@@ -154,10 +163,6 @@
           <li class='blog-previous-posts--article'>
             <a href='/2010/10/11/Contrasaurus-launched.html'>Contrasaurus launched</a>
             <div class='date'>Oct 11, 2010</div>
-          </li>
-          <li class='blog-previous-posts--article'>
-            <a href='/2010/08/31/Contrasaurus.html'>Contrasaurus</a>
-            <div class='date'>Aug 31, 2010</div>
           </li>
         </ul>
       </div>

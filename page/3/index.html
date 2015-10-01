@@ -26,27 +26,21 @@
       <div class='blog-page--container'>
         <div class='blog-page--post'>
           <h2 class='title'>
-            <a href="/2011/10/05/Programmatically focus content inside an iFrame.html">Programmatically focus content inside an iFrame</a>
+            <a href="/2010/08/31/Contrasaurus.html">Contrasaurus</a>
           </h2>
-          <div class='blog-date' m-small>Oct  5, 2011</div>
-          <div class='blog-date' m-fixed='' m-left=''>
-            <div class='blog-date--month'>OCT</div>
-            <div class='blog-date--day' m-bold> 5</div>
-            <div class='blog-date--year'>2011</div>
+          <div class='blog-date' m-small>Aug 31, 2010</div>
+          <div class='blog-date' m-absolute='' m-left=''>
+            <div class='blog-date--month'>AUG</div>
+            <div class='blog-date--day' m-bold>31</div>
+            <div class='blog-date--year'>2010</div>
           </div>
+          <p>Despite all the bold claims I made in 50% of my blog posts, The Wrens are beating me badly at this blog-off. Saying something of value on the internet is a tough job.</p>
+          
+          <p>The real point of this post isn’t to complain that some band from New Jersey is better than me at typing 5 words every six months, it’s to shamelessly promote an amazing new browser / soon-to-be mobile phone game. It is called Contrasaurus and you can play it <a href="http://contrasaur.us/" target="_blank">here</a>. Ten points if you can name all the references or explain the plot...</p>
         </div>
-        <p>This is a short one. On the Pixie landing page I was trying to use jQuery to focus on a game embedded via an iFrame. I tried</p>
-        <pre class="highlight coffeescript"><code><span class="nx">$</span> <span class="o">-&gt;</span>&#x000A;  <span class="nx">$</span><span class="p">(</span><span class="s">'iframe'</span><span class="p">).</span><span class="na">contents</span><span class="p">().</span><span class="na">find</span><span class="p">(</span><span class="s">'canvas'</span><span class="p">).</span><span class="na">focus</span><span class="p">()</span>&#x000A;</code></pre>
-        
-        <p>but that didn’t work.</p>
-        
-        <p>It turns out to get this working you need setTimeout. I guess the browser isn’t done loading the iFrame contents by the time jQuery says the DOM is ready.</p>
-        <pre class="highlight coffeescript"><code><span class="nx">$</span> <span class="o">-&gt;</span>&#x000A;  <span class="nx">setTimeout</span> <span class="o">-&gt;</span>&#x000A;    <span class="nx">$</span><span class="p">(</span><span class="s">'iframe'</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="na">contentWindow</span><span class="p">.</span><span class="na">focus</span><span class="p">()</span>&#x000A;  <span class="p">,</span> <span class="mi">100</span>&#x000A;</code></pre>
-        
-        <p>Here’s the related <a href="http://stackoverflow.com/questions/369026/setting-focus-to-iframe-contents" target='_blank'>Stack Overflow question</a></p>
-        <div class='blog-social-media'>
-          <a class='fa fa-3x fa-twitter blog-social-media--twitter' href='https://twitter.com/mdiebolt' m-no-underline></a>
-          <a class='fa fa-3x fa-github blog-social-media--github' href='https://github.com/mdiebolt' m-no-underline></a>
+        <div class='blog-pagination'>
+          <a class="blog-pagination--previous-page" m-left="" m-no-underline="" href="/page/2/">Prev page</a>
+          <div class='blog-pagination--current-page' m-middle>Page 3 of 3</div>
         </div>
       </div>
     </div><nav class='blog-previous-posts' m-fixed-right>
