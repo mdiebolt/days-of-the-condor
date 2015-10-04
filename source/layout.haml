@@ -25,21 +25,5 @@
 
     = partial :sidebar, locals: { blog: blog }
     = partial :analytics
+    = javascript_include_tag "site"
 
-    :javascript
-      function toggleSlide() {
-        if (document.body.hasAttribute("s-slide-out")) {
-          document.body.removeAttribute("s-slide-out")
-        } else {
-          document.body.setAttribute("s-slide-out", "")
-        }
-      }
-      var nav = document.querySelector(".blog-information--recent-article-navigation")
-
-      nav.addEventListener("click", toggleSlide)
-
-      window.addEventListener("resize", function() {
-        if (window.innerWidth > 640) {
-          document.body.removeAttribute("s-slide-out")
-        }
-      })
