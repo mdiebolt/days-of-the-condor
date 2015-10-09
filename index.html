@@ -26,6 +26,22 @@
       <div class='blog-page--container'>
         <div class='blog-page--post'>
           <h2 class='title'>
+            <a href="/2015/10/08/using-coffeelint-for-consistency.html">Using CoffeeLint for consistent code</a>
+          </h2>
+          <div class='blog-date' m-small>Oct  8, 2015</div>
+          <div class='blog-date' m-absolute='' m-left=''>
+            <div class='blog-date--month'>OCT</div>
+            <div class='blog-date--day' m-bold> 8</div>
+            <div class='blog-date--year'>2015</div>
+          </div>
+          <p>As I write more CoffeeScript on large teams, I want to be able to open a file and understand code style with little cognitive overhead. Fighting with engineers over personal opinions about writing code is never worth the time. It’s a job for robots.</p>
+          
+          <p><a href="http://www.coffeelint.org/">CoffeeLint</a> is a tool that helps enforce code conventions. You specify a set of rules and let CoffeeLint blow up CI if things aren’t to your team’s collective stylistic taste.</p>
+          
+          <p>The way we resolve differences of opinion on my team is that if you don...</p>
+        </div>
+        <div class='blog-page--post'>
+          <h2 class='title'>
             <a href="/2015/10/04/How-to-build-a-living-styleguide.html">How to build a living styleguide</a>
           </h2>
           <div class='blog-date' m-small>Oct  4, 2015</div>
@@ -88,26 +104,6 @@
           <p>My new profile is much shorter and is very clear.</p>
           <pre class="highlight shell"><code><span class="c"># export...</span></code></pre>
         </div>
-        <div class='blog-page--post'>
-          <h2 class='title'>
-            <a href="/2011/10/05/Programmatically focus content inside an iFrame.html">Programmatically focus content inside an iFrame</a>
-          </h2>
-          <div class='blog-date' m-small>Oct  5, 2011</div>
-          <div class='blog-date' m-absolute='' m-left=''>
-            <div class='blog-date--month'>OCT</div>
-            <div class='blog-date--day' m-bold> 5</div>
-            <div class='blog-date--year'>2011</div>
-          </div>
-          <p>This is a short one. On the Pixie landing page I was trying to use jQuery to focus on a game embedded via an iFrame. I tried</p>
-          <pre class="highlight coffeescript"><code><span class="nx">$</span> <span class="o">-&gt;</span>&#x000A;  <span class="nx">$</span><span class="p">(</span><span class="s">'iframe'</span><span class="p">).</span><span class="na">contents</span><span class="p">().</span><span class="na">find</span><span class="p">(</span><span class="s">'canvas'</span><span class="p">).</span><span class="na">focus</span><span class="p">()</span>&#x000A;</code></pre>
-          
-          <p>but that didn’t work.</p>
-          
-          <p>It turns out to get this working you need setTimeout. I guess the browser isn’t done loading the iFrame contents by the time jQuery says the DOM is ready.</p>
-          <pre class="highlight coffeescript"><code><span class="nx">$</span> <span class="o">-&gt;</span>&#x000A;  <span class="nx">setTimeout</span> <span class="o">-&gt;</span>&#x000A;    <span class="nx">$</span><span class="p">(</span><span class="s">'iframe'</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="na">contentWindow</span><span class="p">.</span><span class="na">focus</span><span class="p">()</span>&#x000A;  <span class="p">,</span> <span class="mi">100</span>&#x000A;</code></pre>
-          
-          <p>Here’s the related <a href="http://stackoverflow.com/questions/369026/setting-focus-to-iframe-contents" target='_blank'>Stack Overflow question</a></p>
-        </div>
         <div class='blog-pagination'>
           <div class='blog-pagination--current-page' m-middle>Page 1 of 3</div>
           <a class="blog-pagination--next-page" m-right="" m-no-underline="" href="/page/2/">Next page</a>
@@ -118,6 +114,10 @@
         <img class="blog-logo" src="/images/logo.svg" />
         <h2 class='blog-previous-posts--title'>Recent Articles</h2>
         <ul class='blog-previous-posts--list'>
+          <li class='blog-previous-posts--article'>
+            <a href='/2015/10/08/using-coffeelint-for-consistency.html'>Using CoffeeLint for consistent code</a>
+            <div class='date'>Oct  8, 2015</div>
+          </li>
           <li class='blog-previous-posts--article'>
             <a href='/2015/10/04/How-to-build-a-living-styleguide.html'>How to build a living styleguide</a>
             <div class='date'>Oct  4, 2015</div>
@@ -153,10 +153,6 @@
           <li class='blog-previous-posts--article'>
             <a href='/2011/03/14/glass.sass.html'>glass.sass</a>
             <div class='date'>Mar 14, 2011</div>
-          </li>
-          <li class='blog-previous-posts--article'>
-            <a href='/2010/12/08/Snake-html.html'>Snake</a>
-            <div class='date'>Dec  8, 2010</div>
           </li>
         </ul>
       </div>
