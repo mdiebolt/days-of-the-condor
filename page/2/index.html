@@ -26,6 +26,23 @@
       <div class='blog-page--container'>
         <div class='blog-page--post'>
           <h2 class='title'>
+            <a href="/2012/12/10/clean-bash-profiles.html">Clean bash profiles</a>
+          </h2>
+          <div class='blog-date' m-small>Dec 10, 2012</div>
+          <div class='blog-date' m-absolute='' m-left=''>
+            <div class='blog-date--month'>DEC</div>
+            <div class='blog-date--day' m-bold>10</div>
+            <div class='blog-date--year'>2012</div>
+          </div>
+          <p>Lately I’ve been more interested in writing Bash. However, as cool as Bash is for being able to pipe data all over the place, it has a really hard to read syntax. This makes understanding people’s 1000 line long Bash file tedious.</p>
+          
+          <p>The more utility functions, aliases, and slight tweaks I add to my profile, the longer I have to spend each time I come back to it. I recently split out each of the sections into their own files to fix this.</p>
+          
+          <p>My new profile is much shorter and is very clear.</p>
+          <pre class="highlight shell"><code><span class="c"># export...</span></code></pre>
+        </div>
+        <div class='blog-page--post'>
+          <h2 class='title'>
             <a href="/2011/10/05/Programmatically focus content inside an iFrame.html">Programmatically focus content inside an iFrame</a>
           </h2>
           <div class='blog-date' m-small>Oct  5, 2011</div>
@@ -94,23 +111,6 @@
           
           <p>The sample css was clear but once implemented...</p>
         </div>
-        <div class='blog-page--post'>
-          <h2 class='title'>
-            <a href="/2011/03/14/glass.sass.html">glass.sass</a>
-          </h2>
-          <div class='blog-date' m-small>Mar 14, 2011</div>
-          <div class='blog-date' m-absolute='' m-left=''>
-            <div class='blog-date--month'>MAR</div>
-            <div class='blog-date--day' m-bold>14</div>
-            <div class='blog-date--year'>2011</div>
-          </div>
-          <p>As part of our Pixie development stack we use SASS because it is much more manageable than standard css for supporting interesting styles across browsers.</p>
-          
-          <p>Recently, we decided to incorporate a glassy box-shadow into most of our gallery pages.</p>
-          
-          <p>Opera’s docs were very clear about how to set up this style. However, you’ll notice, as with a number of other css3 features, you need to include a ton of css (4 rules each made up of 5 shadows) to get this to work well across browsers.</p>
-          <pre class="highlight sass"><code><span class="nt">css_selector</span> <span class="err">{</span>&#x000A;...</code></pre>
-        </div>
         <div class='blog-pagination'>
           <a class="blog-pagination--previous-page" m-left="" m-no-underline="" href="/">Prev page</a>
           <div class='blog-pagination--current-page' m-middle>Page 2 of 3</div>
@@ -120,8 +120,12 @@
     </div><nav class='blog-previous-posts' m-fixed-right>
       <div class='blog-previous-posts--container'>
         <img class="blog-logo" src="/images/logo.svg" />
-        <h2 class='blog-previous-posts--title'>Recent Articles</h2>
+        <h2 class='blog-previous-posts--title'>Articles</h2>
         <ul class='blog-previous-posts--list'>
+          <li class='blog-previous-posts--article'>
+            <a href='/2015/11/08/writing-your-own-coffeelint-plugin.html'>Writing your own CoffeeLint plugin</a>
+            <div class='date'>Nov  8, 2015</div>
+          </li>
           <li class='blog-previous-posts--article'>
             <a href='/2015/10/08/using-coffeelint-for-consistency.html'>Using CoffeeLint for consistent code</a>
             <div class='date'>Oct  8, 2015</div>
@@ -157,10 +161,6 @@
           <li class='blog-previous-posts--article'>
             <a href='/2011/03/17/OS-X-dock-in-css.html'>OS X dock in css</a>
             <div class='date'>Mar 17, 2011</div>
-          </li>
-          <li class='blog-previous-posts--article'>
-            <a href='/2011/03/14/glass.sass.html'>glass.sass</a>
-            <div class='date'>Mar 14, 2011</div>
           </li>
         </ul>
       </div>

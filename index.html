@@ -26,6 +26,20 @@
       <div class='blog-page--container'>
         <div class='blog-page--post'>
           <h2 class='title'>
+            <a href="/2015/11/08/writing-your-own-coffeelint-plugin.html">Writing your own CoffeeLint plugin</a>
+          </h2>
+          <div class='blog-date' m-small>Nov  8, 2015</div>
+          <div class='blog-date' m-absolute='' m-left=''>
+            <div class='blog-date--month'>NOV</div>
+            <div class='blog-date--day' m-bold> 8</div>
+            <div class='blog-date--year'>2015</div>
+          </div>
+          <p>Recently I wrote about maintaining code consistency on growing teams using CoffeeLint. If you use CoffeeLint across many projects or with a large enough team, sooner or later you’ll come across a situation that isn’t covered by an out of the box rule.</p>
+          
+          <p>CoffeeLint provides a plugin system that makes authoring your own linter easy. The implementation guidelines are outlined in <a href="http://www.coffeelint.org/">Building Custom Rules</a>. There are three different types of rules that can be implemented depending on your needs: LineLinter...</p>
+        </div>
+        <div class='blog-page--post'>
+          <h2 class='title'>
             <a href="/2015/10/08/using-coffeelint-for-consistency.html">Using CoffeeLint for consistent code</a>
           </h2>
           <div class='blog-date' m-small>Oct  8, 2015</div>
@@ -87,23 +101,6 @@
           <p>Here’s a utility function I wrote to help me color text. It colors output yellow when it’s within a warning range, and red when it exceeds a critical range.</p>
           <pre class="highlight shell"><code><span class="c">#!/usr/bin/env sh</span>&#x000A;&#x000A;<span class="c"># set the output color based on conditions</span>&#x000A;set_output_color<span class="o">()</span> <span class="o">{</span>&#x000A;  <span class="nb">local </span><span class="nv">value</span></code></pre>
         </div>
-        <div class='blog-page--post'>
-          <h2 class='title'>
-            <a href="/2012/12/10/clean-bash-profiles.html">Clean bash profiles</a>
-          </h2>
-          <div class='blog-date' m-small>Dec 10, 2012</div>
-          <div class='blog-date' m-absolute='' m-left=''>
-            <div class='blog-date--month'>DEC</div>
-            <div class='blog-date--day' m-bold>10</div>
-            <div class='blog-date--year'>2012</div>
-          </div>
-          <p>Lately I’ve been more interested in writing Bash. However, as cool as Bash is for being able to pipe data all over the place, it has a really hard to read syntax. This makes understanding people’s 1000 line long Bash file tedious.</p>
-          
-          <p>The more utility functions, aliases, and slight tweaks I add to my profile, the longer I have to spend each time I come back to it. I recently split out each of the sections into their own files to fix this.</p>
-          
-          <p>My new profile is much shorter and is very clear.</p>
-          <pre class="highlight shell"><code><span class="c"># export...</span></code></pre>
-        </div>
         <div class='blog-pagination'>
           <div class='blog-pagination--current-page' m-middle>Page 1 of 3</div>
           <a class="blog-pagination--next-page" m-right="" m-no-underline="" href="/page/2/">Next page</a>
@@ -112,8 +109,12 @@
     </div><nav class='blog-previous-posts' m-fixed-right>
       <div class='blog-previous-posts--container'>
         <img class="blog-logo" src="/images/logo.svg" />
-        <h2 class='blog-previous-posts--title'>Recent Articles</h2>
+        <h2 class='blog-previous-posts--title'>Articles</h2>
         <ul class='blog-previous-posts--list'>
+          <li class='blog-previous-posts--article'>
+            <a href='/2015/11/08/writing-your-own-coffeelint-plugin.html'>Writing your own CoffeeLint plugin</a>
+            <div class='date'>Nov  8, 2015</div>
+          </li>
           <li class='blog-previous-posts--article'>
             <a href='/2015/10/08/using-coffeelint-for-consistency.html'>Using CoffeeLint for consistent code</a>
             <div class='date'>Oct  8, 2015</div>
@@ -149,10 +150,6 @@
           <li class='blog-previous-posts--article'>
             <a href='/2011/03/17/OS-X-dock-in-css.html'>OS X dock in css</a>
             <div class='date'>Mar 17, 2011</div>
-          </li>
-          <li class='blog-previous-posts--article'>
-            <a href='/2011/03/14/glass.sass.html'>glass.sass</a>
-            <div class='date'>Mar 14, 2011</div>
           </li>
         </ul>
       </div>
